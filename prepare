@@ -1,0 +1,208 @@
+#!/bin/bash - 
+#===============================================================================
+#
+#          FILE: prepare
+# 
+#         USAGE: ./prepare -i <app-name> -r /opt
+#                ./prepare -f 
+# 
+#   DESCRIPTION: Initialize an aviumlabs Phoenix Framework docker project with
+#                database support 
+#       OPTIONS: ---
+#  REQUIREMENTS: ---
+#          BUGS: ---
+#         NOTES: The Avium Labs Phoenix Framework docker project is setup
+#                as a multi-stage process. 
+#                First stage:
+#                  Initialize Phoenix Framework project
+#                Second stage:
+#                  Configure dev.exs for docker
+#                  Configure .env for app
+#        AUTHOR: Michael Konrad (2023), 
+#  ORGANIZATION: Avium Labs LLC 
+#       CREATED: 04/05/2023 10:42
+#      REVISION:  ---
+#===============================================================================
+
+set -o nounset                              # Treat unset variables as an error
+IFS=$'\n\t'
+
+# Defaults
+ENV_FILE=$(pwd)/.env
+APP_CONTAINER_ROOT=/opt
+PHX_IMAGE=aviumlabs/phoenix:latest-alpine
+
+# Help 
+usage() {
+	printf "\n"
+	printf "A script to automate the steps to configure a Phoenix Framework\n"
+	printf "project without a database.\n"
+	printf "The default image for this script is:\n" 
+	printf "  aviumlabs/phoenix:latest-alpine.\n"
+	printf "\n"
+	printf "Project preparation is done in a two step process: \n"
+	printf "Step 1: Initialize Phoenix Framework project docker container root\n" 
+	printf "        and the application name.\n"
+	printf "\n"
+	printf "Step 2: Finalize the Phoenix Framework project.\n"
+	printf "\n"
+	printf "$0 -i <app_name> [-r </app/container/root>]\n"
+	printf "$0 -f\n"
+	printf "\n Details: \n"
+	printf "           -i specify the name of the application.\n"
+	printf "           -r specify the application's container root\n"
+	printf "              directory, defaults to /opt.\n"
+	printf "           -f finalize the Phoenix Framework project,\n"
+	printf "              updates the config/dev.exs file and the\n"
+	printf "              docker environment file.\n"
+	printf "\n"
+	printf " This script by default generates the docker environment \n"
+	printf " file, as .env file in the current working directory.\n"
+        printf "\n\n"
+        printf "Initialize example: $0 -i gutentag\n"
+	printf "\n"
+	printf "Finalize example: $0 -f\n"	
+	printf "\n"
+	exit 1
+}
+
+# Main function to run script operations
+#
+# Script options 
+optstring=":i:r:fh"
+while getopts ${optstring} arg; do
+		case ${arg} in 
+			f)
+				FINIT='true'
+				INIT='false'
+				;;
+			i)
+				INIT='true'
+				FINIT='false'
+				APP_NAME=${OPTARG};
+				;;
+			r)
+				INIT='true'
+				FINIT='false'
+				APP_CONTAINER_ROOT=${OPTARG}
+				;;
+			h)
+				usage
+				;;
+			:)
+				printf "Missing required value for -$OPTARG\n"
+				usage
+				;;
+			\?)
+				printf "Invalid option... -${OPTARG}\n"
+				usage
+				;;
+		esac
+	done
+
+main() {
+	if [[ ${FINIT} == true ]]; then
+		finalize
+
+	elif  [[ ${INIT} == true ]]; then 
+		initialize
+	fi
+}
+
+# Generate the docker environment file if it does not exist
+gen_env_file() {
+
+	if [ ! -f $ENV_FILE ]; then
+
+cat > $ENV_FILE <<EnvFile
+# app variables
+APP_CONTAINER_ROOT=$APP_CONTAINER_ROOT
+APP_NAME=$APP_NAME
+WORKINGDIR=$APP_CONTAINER_ROOT
+EnvFile
+
+	fi
+}
+
+# Report an error when sed fails
+sed_error() {
+	printf "Exiting, failed to update... $update_file. Please file a \
+bug report.\n"
+	exit 1
+}
+
+
+# Initialize the Phoenix Framework project
+initialize() {
+	if [ -n $APP_NAME ]; then 
+		
+		printf "Initializing Phoenix Framework project...\n"
+		printf "Application container root... $APP_CONTAINER_ROOT\n"
+		printf "Application name............. $APP_NAME\n"
+		
+		# Generate the initial docker environment file
+		gen_env_file
+
+		# Create src directory if not existing
+		if [[ ! -d "$(pwd)/src" ]]; then 
+			mkdir -p "$(pwd)/src"
+		fi
+
+		printf "Running phx.new --install --no-ecto...\n"
+		docker run --rm -w "$APP_CONTAINER_ROOT" \
+			--mount type=bind,src="$(pwd)/src",target=$APP_CONTAINER_ROOT \
+			$PHX_IMAGE mix phx.new --install --no-ecto $APP_NAME
+	else
+		usage
+	fi
+}
+
+
+# Finalize the Phoenix Framework configuration and call mix ecto.create
+finalize() {
+	if [ ! -f "$ENV_FILE" ]; then 
+		usage
+	else
+		lc=0
+		while IFS=$'=' read -r avar aval; do
+
+			if [[ "$avar" == "APP_ROOT"* ]]; then 
+				APP_CONTAINER_ROOT=$aval	
+			fi
+			if [[ "$avar" == "APP_NAME"* ]]; then
+				APP_NAME=$aval
+			fi
+			
+		done < $ENV_FILE
+
+		# Set the docker working directory
+		# This is the directory where the app will live in the 
+		# docker container
+		WORKINGDIR="$APP_CONTAINER_ROOT/$APP_NAME"
+
+		# Configure dev.exs for docker
+		update_file="src/$APP_NAME/config/dev.exs"
+		sed -i '' -e 's|127, 0, 0, 1|0, 0, 0, 0|' $update_file
+
+		# sed varies between operating systems, check if it failed
+		if [ $? -gt 0 ]; then
+			sed_error
+		fi
+
+		# Update the WORKINGDIR in the env file
+		update_file=$ENV_FILE
+		sed -i '' -e "s|\(WORKINGDIR=\).*|\1"$WORKINGDIR"|" \
+			$update_file
+
+		# sed varies between operating systems, check if it failed
+		if [ $? -gt 0 ]; then
+			sed_error	
+		fi
+
+		docker run -p 4000:4000 -it --rm -w $WORKINGDIR \
+			--mount type=bind,src="$(pwd)/src/$APP_NAME",target="$WORKINGDIR" \
+			$PHX_IMAGE 
+	fi
+}
+
+main

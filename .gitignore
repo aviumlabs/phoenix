@@ -1,0 +1,29 @@
+# Elixir
+/_build
+/cover
+/deps
+/doc
+/.fetch
+*.ez
+/config/*.secret.exs
+.elixir_ls/
+.env
+
+# Erlang
+.eunit
+*.o
+*.beam
+*.plt
+erl_crash.dump
+.concrete/DEV_MODE
+
+# rebar 3
+.rebar
+_build/
+_checkouts/
+
+# vim
+*.swp
+
+# src directory, ignore for the template repository, only for testing image
+/src
