@@ -22,7 +22,7 @@ To build a specific version of the Phoenix Framework; pass in the Phoenix
 version you want to build: 
 
 `
-$ export PHX_VERSION=1.7.1  
-$ docker build -t aviumlabs/phoenix:$PHX_VERSION-alpine --build-arg \  
- PHX_VERSION=$PHX_VERSION .  
+$ export PHX_VERSION=1.7.1\s\s
+$ docker build -t aviumlabs/phoenix:$PHX_VERSION-alpine --build-arg \\s\s
+ PHX_VERSION=$PHX_VERSION .
 `
