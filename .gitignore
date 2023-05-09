@@ -1,3 +1,6 @@
+# Apple
+.DS_Store
+
 # Elixir
 /_build
 /cover
@@ -19,7 +22,6 @@ erl_crash.dump
 
 # rebar 3
 .rebar
-_build/
 _checkouts/
 
 # vim
