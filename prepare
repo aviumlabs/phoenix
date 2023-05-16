@@ -7,7 +7,7 @@
 #                ./prepare -f 
 # 
 #   DESCRIPTION: Initialize an aviumlabs Phoenix Framework docker project with
-#                database support 
+#                out database support 
 #       OPTIONS: ---
 #  REQUIREMENTS: ---
 #          BUGS: ---
@@ -66,24 +66,22 @@ usage() {
 	exit 1
 }
 
-# Main function to run script operations
-#
+FINIT='false'
+INIT='false'
+
 # Script options 
 optstring=":i:r:fh"
 while getopts ${optstring} arg; do
 		case ${arg} in 
 			f)
 				FINIT='true'
-				INIT='false'
 				;;
 			i)
 				INIT='true'
-				FINIT='false'
 				APP_NAME=${OPTARG};
 				;;
 			r)
 				INIT='true'
-				FINIT='false'
 				APP_CONTAINER_ROOT=${OPTARG}
 				;;
 			h)
@@ -166,7 +164,7 @@ finalize() {
 		lc=0
 		while IFS=$'=' read -r avar aval; do
 
-			if [[ "$avar" == "APP_ROOT"* ]]; then 
+			if [[ "$avar" == "APP_CONTAINER_ROOT"* ]]; then 
 				APP_CONTAINER_ROOT=$aval	
 			fi
 			if [[ "$avar" == "APP_NAME"* ]]; then
