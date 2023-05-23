@@ -6,6 +6,9 @@ ARG APP_ROOT=/opt
 WORKDIR $APP_ROOT
 
 RUN apk add --no-cache \
+    make \
+    gcc \
+    musl-dev \
     postgresql15-client \ 
     inotify-tools \
     git \
