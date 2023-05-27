@@ -8,6 +8,26 @@ Run `$ ./prepare -h` to get started.
 
 The image is based on the Elixir Alpine docker image. 
 
+Naming Convention
+-----------------
+This project currently only produces an Alpine based platform. No plans to 
+change that for the time being.
+
+The naming convention has been based on like projects, where Alpine is 
+appended in the tag. Keeping that too. My conundrum is supporting the next
+advances in Erlang and Elixir images while maintaining the current branch is 
+not supported in my standard naming convention.
+
+### Standard Naming Convention
+
+    aviumlabs/phoenix:<version | latest>-alpine
+
+### Possible Extended Naming Convention
+
+    aviumlabs/phoenix:<version | latest>-alpine-elixir<version>
+
+I think I'll start there and move forward.
+
 Build Latest
 ------------
 The image defaults to building the latest version of Phoenix Framework. As the 
