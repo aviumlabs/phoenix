@@ -24,9 +24,9 @@ not supported in my standard naming convention.
 
 ### Possible Extended Naming Convention
 
-    aviumlabs/phoenix:<version | latest>-alpine-elixir<version>
+    aviumlabs/phoenix:<version | latest>-elixir<version>-alpine
 
-I think I'll start there and move forward.
+Starting here and moving forward.
 
 Build Latest
 ------------
@@ -35,6 +35,11 @@ image is based on Elixir Alpine it follows the naming convention of that
 project to indicate the Alpine Linux base.
 
     $ docker build -t aviumlabs/phoenix:latest-alpine .
+
+Build Extended Version
+----------------------
+
+    $ docker build -t aviumlabs/phoenix:latest-elixir1.15.0-rc.0-alpine .
  
 Build a Specific Version
 ------------------------
