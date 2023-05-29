@@ -2,30 +2,30 @@
 .DS_Store
 
 # Elixir
-/_build
-/cover
-/deps
-/doc
-/.fetch
+src/**/_build
+src/**/cover
+src/**/deps
+src/**/doc
+src/**/.fetch
 *.ez
-/config/*.secret.exs
-.elixir_ls/
+src/**/config/*.secret.exs
+src/**/.elixir_ls/
 .env
 
 # Erlang
-.eunit
+*.eunit
 *.o
 *.beam
 *.plt
-erl_crash.dump
-.concrete/DEV_MODE
+*erl_crash.dump
+*.concrete/DEV_MODE
 
 # rebar 3
-.rebar
-_checkouts/
+*.rebar
+src/**/_checkouts/
 
 # vim
 *.swp
 
 # src directory, ignore for the template repository, only for testing image
-/src
+src

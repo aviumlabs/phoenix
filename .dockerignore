@@ -20,6 +20,11 @@ npm-debug.log
 .coverage
 .coverage.*
 
+# Vim
+*.swp
+
 # Aviumlabs specific
+LICENSE
+src
 README.md
 prepare

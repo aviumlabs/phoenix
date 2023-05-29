@@ -24,8 +24,7 @@ not supported in my standard naming convention.
 
 ### Possible Extended Naming Convention
 
-    aviumlabs/phoenix:<version | latest>-alpine-elixir<version>
-
+    aviumlabs/phoenix:<version | latest>-elixir<version>-alpine
 I think I'll start there and move forward.
 
 Build Latest
@@ -66,3 +65,12 @@ After creating a new repository from the template repository, you can get
 started with the prepare script:
 
     $ ./prepare -h 
+
+Push Image to Docker Hub
+------------------------
+
+    $ docker push aviumlabs/phoenix:<tagname>
+ 
+    $ docker push aviumlabs/phoenix:latest-alpine
+    $ docker push aviumlabs/phoenix:1.7.2-alpine
+    $ docker push aviumlabs/phoenix:latest-elixir.1.15.0-rc.0-alpine
