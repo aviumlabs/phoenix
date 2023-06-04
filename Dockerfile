@@ -15,7 +15,6 @@ RUN apk add --no-cache \
     nodejs \
     curl \
     && curl -L https://npmjs.com/install.sh | sh \
-    && npm install update-browserslist-db@latest \
     && mix local.hex --force \
     && mix archive.install hex phx_new $PHX_VERSION --force \
     && mix local.rebar --force
