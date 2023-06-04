@@ -33,7 +33,7 @@ The image defaults to building the latest version of Phoenix Framework. As the
 image is based on Elixir Alpine it follows the naming convention of that 
 project to indicate the Alpine Linux base.
 
-    $ docker build -t aviumlabs/phoenix:latest-alpine .
+    $ docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
  
 Build a Specific Version
 ------------------------
@@ -58,8 +58,8 @@ GitHub documentation for using a template repository is here:
     https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 
 The services included are:
-- PostgreSQL 15.2
-- Phoenix Framework 1.7.2 or later
+- PostgreSQL 15.3
+- Phoenix Framework 1.7.3 or later
 
 After creating a new repository from the template repository, you can get 
 started with the prepare script:
