@@ -73,4 +73,3 @@ Push Image to Docker Hub
  
     $ docker push aviumlabs/phoenix:latest-alpine
     $ docker push aviumlabs/phoenix:1.7.3-alpine
-    $ docker push aviumlabs/phoenix:latest-elixir.1.15.0-rc.0-alpine
