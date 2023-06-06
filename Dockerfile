@@ -6,6 +6,7 @@ ARG APP_ROOT=/opt
 WORKDIR $APP_ROOT
 
 RUN apk add --no-cache \
+    openssl \
     make \
     gcc \
     musl-dev \
