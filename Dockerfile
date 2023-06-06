@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM elixir:1.15.0-rc.0-alpine
+FROM elixir:1.15.0-rc.1-alpine
 
 ARG PHX_VERSION=''
 ARG APP_ROOT=/opt
