@@ -22,7 +22,7 @@ not supported in my standard naming convention.
 
     aviumlabs/phoenix:<version | latest>-alpine
 
-### Possible Extended Naming Convention
+### Extended Naming Convention
 
     aviumlabs/phoenix:<version | latest>-elixir<version>-alpine
 
@@ -39,7 +39,7 @@ project to indicate the Alpine Linux base.
 Build Extended Version
 ----------------------
 
-    $ docker build -t aviumlabs/phoenix:latest-elixir1.15.0-rc.0-alpine .
+    $ docker build -t aviumlabs/phoenix:latest-elixir1.15.0-rc.2-alpine .
  
 Build a Specific Version
 ------------------------
@@ -47,7 +47,7 @@ To build a specific version of the Phoenix Framework; pass in the Phoenix
 version you want to build: 
 
 
-    $ export PHX_VERSION=1.7.1
+    $ export PHX_VERSION=1.7.5
     $ docker build -t aviumlabs/phoenix:$PHX_VERSION-alpine --build-arg \
     PHX_VERSION=$PHX_VERSION .
 
@@ -64,8 +64,8 @@ GitHub documentation for using a template repository is here:
     https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 
 The services included are:
-- PostgreSQL 15.2
-- Phoenix Framework 1.7.2 or later
+- PostgreSQL 15.3
+- Phoenix Framework 1.7.6 or later
 
 After creating a new repository from the template repository, you can get 
 started with the prepare script:
