@@ -14,8 +14,8 @@ RUN apk add --no-cache \
     inotify-tools \
     git \
     nodejs \
-    curl \
-    && curl -L https://npmjs.com/install.sh | sh \
+    npm \
+    && npm install npm@latest -g \
     && mix local.hex --force \
     && mix archive.install hex phx_new $PHX_VERSION --force \
     && mix local.rebar --force
