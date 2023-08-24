@@ -58,7 +58,7 @@ GitHub documentation for using a template repository is here:
     https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 
 The services included are:
-- PostgreSQL 15.3
+- PostgreSQL 15.4
 - Phoenix Framework 1.7.6 or later
 
 After creating a new repository from the template repository, you can get 
@@ -73,4 +73,4 @@ Push Image to Docker Hub
  
     $ docker push aviumlabs/phoenix:latest-alpine
     $ docker push aviumlabs/phoenix:1.7.6-alpine
-    $ docker push aviumlabs/phoenix:latest-elixir1.15.0-rc.2-alpine
+    $ docker push aviumlabs/phoenix:1.7.7-elixir1.14.5-alpine
