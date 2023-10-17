@@ -1,8 +1,13 @@
 # syntax=docker/dockerfile:1
-FROM elixir:1.15.4-alpine
+FROM elixir:1.15.6-alpine
 
 ARG PHX_VERSION=''
 ARG APP_ROOT=/opt
+
+ENV SECRET_KEY_BASE=''
+ENV DATABASE_URL=''
+ENV MIX_ENV=''
+
 WORKDIR $APP_ROOT
 
 RUN apk add --no-cache \
