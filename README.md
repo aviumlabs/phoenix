@@ -59,7 +59,7 @@ To build a specific version of the Phoenix Framework; pass in the Phoenix
 version you want to build: 
 
 
-    $ export PHX_VERSION=1.7.6
+    $ export PHX_VERSION=1.7.10
     $ docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
     --build-arg PHX_VERSION=$PHX_VERSION .
 
@@ -84,7 +84,7 @@ The aviumlabs/phoenix-compose repo is a template repository.
 
 The services included are:  
 - PostgreSQL 15.4  
-- Phoenix Framework 1.7.7 or later  
+- Phoenix Framework 1.7.10 or later  
 
 
 ## Project Notes
@@ -126,16 +126,18 @@ The above 3 steps are completed by the prepare script with -f flag:
 
     $ ./prepare -f
 
+
 >
 > Compiling 14 files (.ex)  
 > Generated testapp app  
-> [info] Running TestappWeb.Endpoint with cowboy 2.10.0 at 0.0.0.0:4000 (http)  
-> [info] Access TestappWeb.Endpoint at http://localhost:4000  
-> [watch] build finished, watching for changes...  
->  
-> Rebuilding...  
->  
-> Done in 777ms.  
+> [info] Running TestappWeb.Endpoint with cowboy 2.10.0 at 0.0.0.0:4000 (http)
+> [info] Access TestappWeb.Endpoint at http://localhost:4000
+> [debug] Downloading esbuild from https://registry.npmjs.org/@esbuild/linux-x64/0.17.11
+>
+> Rebuilding...
+> 
+> Done in 976ms.
+> [watch] build finished, watching for changes...
 >
 
 
@@ -148,23 +150,23 @@ In a separate terminal session, confirm the application is running:
     $ curl -X 'GET' http://localhost:4000
 
 `
- <!DOCTYPE html>  
- <html lang="en" class="[scrollbar-gutter:stable]">  
-  <head>  
-    <meta charset="utf-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1">  
-    <meta name="csrf-token" content="GkYEKgwzKR03KGoTB1E_D0h_FRw2FlknEs0bTceKuK2pH7OLpGVonAhD">  
-    <title data-suffix=" · Phoenix Framework">  
- Testapp  
-     · Phoenix Framework</title>  
-    <link phx-track-static rel="stylesheet" href="/assets/app.css">  
-    <script defer phx-track-static type="text/javascript" src="/assets/app.js">  
-    </script>  
-  </head>  
-  <body class="bg-white antialiased">  
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="LT8sMxZVDDJOXDckWgEJOBsaCTF2cj5ffIYfA2CfziVuc2qTpnMp45w-">
+    <title data-suffix=" · Phoenix Framework">
+Testapp
+     · Phoenix Framework</title>
+    <link phx-track-static rel="stylesheet" href="/assets/app.css">
+    <script defer phx-track-static type="text/javascript" src="/assets/app.js">
+    </script>
+  </head>
+  <body class="bg-white antialiased"> 
   ...  
-  </body>  
-  </html>  
+  <iframe hidden height="0" width="0" src="/phoenix/live_reload/frame"></iframe></body>
+</html>
 `
 
 
@@ -191,5 +193,3 @@ Internal notes for pushing images to Docker Hub.
 
  
     $ docker push aviumlabs/phoenix:latest-alpine
-    $ docker push aviumlabs/phoenix:1.7.6-alpine
-    $ docker push aviumlabs/phoenix:latest-elixir1.14.5-alpine
