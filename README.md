@@ -51,6 +51,11 @@ The image defaults to building the latest version of Phoenix Framework.
 
     $ docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
 
+
+Update the base image:
+
+    $ docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
+
  
 ### Specific Version
 
@@ -90,20 +95,22 @@ The services included are:
 ## Project Notes
 
 
-### Testing
+### Project Testing
 
 
 Testing prior to a new build:
 
     $ cd <image/directory>
-    $ ./prepare -i testapp
+    $ ./prepare -i apptest
 
 >
 > Initializing Phoenix Framework project...  
 > Application container root... /opt  
-> Application name............. testapp  
+> Application name............. apptest  
 > Running phx.new --install --no-ecto...  
 > ...  
+> * running mix deps.get
+> * running mix assets.setup
 > * running mix deps.compile  
 > ...  
 >  
@@ -129,15 +136,15 @@ The above 3 steps are completed by the prepare script with -f flag:
 
 >
 > Compiling 14 files (.ex)  
-> Generated testapp app  
-> [info] Running TestappWeb.Endpoint with cowboy 2.10.0 at 0.0.0.0:4000 (http)
-> [info] Access TestappWeb.Endpoint at http://localhost:4000
+> Generated apptest app  
+> [info] Running ApptestWeb.Endpoint with cowboy 2.10.0 at 0.0.0.0:4000 (http)
+> [info] Access ApptestWeb.Endpoint at http://localhost:4000
 > [debug] Downloading esbuild from https://registry.npmjs.org/@esbuild/linux-x64/0.17.11
 >
-> Rebuilding...
+> Rebuilding...  
+> [watch] build finished, watching for changes...  
 > 
-> Done in 976ms.
-> [watch] build finished, watching for changes...
+> Done in 765ms.  
 >
 
 
@@ -150,15 +157,15 @@ In a separate terminal session, confirm the application is running:
     $ curl -X 'GET' http://localhost:4000
 
 `
-<!DOCTYPE html>
+<!-- <ApptestWeb.Layouts.root> lib/apptest_web/components/layouts/root.html.heex:1 --><!DOCTYPE html>
 <html lang="en" class="[scrollbar-gutter:stable]">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="LT8sMxZVDDJOXDckWgEJOBsaCTF2cj5ffIYfA2CfziVuc2qTpnMp45w-">
     <title data-suffix=" · Phoenix Framework">
-Testapp
-     · Phoenix Framework</title>
+Apptest
+     · Phoenix Framework</title><!-- </Phoenix.Component.live_title> -->
     <link phx-track-static rel="stylesheet" href="/assets/app.css">
     <script defer phx-track-static type="text/javascript" src="/assets/app.js">
     </script>
@@ -166,7 +173,7 @@ Testapp
   <body class="bg-white antialiased"> 
   ...  
   <iframe hidden height="0" width="0" src="/phoenix/live_reload/frame"></iframe></body>
-</html>
+</html><!-- </ApptestWeb.Layouts.root> -->%
 `
 
 
@@ -175,13 +182,32 @@ Output from testapp runtime terminal:
 
 >
 > [info] GET /  
-> [debug] Processing with TestappWeb.PageController.home/2  
+> [debug] Processing with ApptestWeb.PageController.home/2  
 >  Parameters: %{}  
 >  Pipelines: [:browser]  
-> [info] Sent 200 in 613µs  
+> [info] Sent 200 in 760µs  
 >
 
 Press ctrl-c a to stop the running testapp
+
+
+## Application Testing
+
+
+The Avium Labs Phoenix docker image includes the MIX\_ENV environment variable
+in its Dockerfile. 
+
+The `prepare` script creates a docker environment file - .env in the 
+applications root directory. Change the MIX\_ENV variable to `test` before 
+running the mix test task.  
+
+`MIX_ENV=test` 
+
+Run docker compose down/docker compose up to load the updated configuration and 
+then run `mix test`. 
+
+Change the MIX\_ENV setting back to `dev`, run docker compose down/up to go back 
+to development mode. 
 
 
 ### Docker Hub

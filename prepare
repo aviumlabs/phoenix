@@ -31,6 +31,7 @@ IFS=$'\n\t'
 ENV_FILE=$(pwd)/.env
 APP_CONTAINER_ROOT=/opt
 PHX_IMAGE=aviumlabs/phoenix:latest-alpine
+MIX_ENV=dev                                 # dev, test, prod
 
 # Help 
 usage() {
@@ -116,6 +117,7 @@ cat > $ENV_FILE <<EnvFile
 # app variables
 APP_CONTAINER_ROOT=$APP_CONTAINER_ROOT
 APP_NAME=$APP_NAME
+MIX_ENV=$MIX_ENV
 WORKINGDIR=$APP_CONTAINER_ROOT
 EnvFile
 
@@ -170,6 +172,9 @@ finalize() {
 			if [[ "$avar" == "APP_NAME"* ]]; then
 				APP_NAME=$aval
 			fi
+			if [[ "$avar" == "MIX_ENV"* ]]; then
+				MIX_ENV=$aval
+			fi
 			
 		done < $ENV_FILE
 
@@ -195,6 +200,15 @@ finalize() {
 		# sed varies between operating systems, check if it failed
 		if [ $? -gt 0 ]; then
 			sed_error	
+		fi
+
+		# Configure test.exs for docker
+		update_file="src/$APP_NAME/config/test.exs"
+		sed -i '' -e 's|127, 0, 0, 1|0, 0, 0, 0|' $update_file
+
+		# sed varies between operating systems, check if it failed
+		if [ $? -gt 0 ]; then
+			sed_error
 		fi
 
 		docker run -p 4000:4000 -it --rm -w $WORKINGDIR \
