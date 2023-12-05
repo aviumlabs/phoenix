@@ -3,11 +3,10 @@
 
 This repo builds a Phoenix Framework docker image. 
 
-This image is based on the Elixir Alpine docker image. 
+This image is based on the Elixir Alpine docker image.   
 
 The included `prepare` script will 
-create a Phoenix Framework project without database support. 
-
+create a Phoenix Framework project without database support.   
 
 
 ## Naming Convention
@@ -15,14 +14,14 @@ create a Phoenix Framework project without database support.
 
 The naming convention is branched into **Standard** and **Extended** and is 
 based on similar projects based on the Alpine Linux distribution, where 
-`-alpine` is appended to the end of the tag.
+`-alpine` is appended to the end of the tag.  
 
 
 The **Standard** branch is based on the latest stable version of Elixir 
-provided by the Elixir docker image. 
+provided by the Elixir docker image.   
 
 The **Extended** branch may either be based on the previous stable 
-version of Elixir or the cutting edge version of Elixir. 
+version of Elixir or the cutting edge version of Elixir.   
 
 
 ### Standard Naming Convention
@@ -31,8 +30,8 @@ version of Elixir or the cutting edge version of Elixir.
     aviumlabs/phoenix:<version | latest>-alpine
 
 
-where version is either numeric based on the Phoenix version or the literal 
-'latest'
+Where version is either numeric based on the Phoenix version or the literal 
+'latest'.  
 
 
 ### Extended Naming Convention
@@ -47,7 +46,7 @@ where version is either numeric based on the Phoenix version or the literal
 ### Latest
 
 
-The image defaults to building the latest version of Phoenix Framework. 
+The image defaults to building the latest version of Phoenix Framework.   
 
     $ docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
 
@@ -61,7 +60,7 @@ Update the base image:
 
 
 To build a specific version of the Phoenix Framework; pass in the Phoenix 
-version you want to build: 
+version you want to build:   
 
 
     $ export PHX_VERSION=1.7.10
@@ -85,7 +84,7 @@ project integrated with PostgreSQL.
 
     https://github.com/aviumlabs/phoenix-compose.git
 
-The aviumlabs/phoenix-compose repo is a template repository. 
+The aviumlabs/phoenix-compose repo is a template repository.   
 
 The services included are:  
 - PostgreSQL 15.4  
@@ -98,7 +97,7 @@ The services included are:
 ### Project Testing
 
 
-Testing prior to a new build:
+Testing prior to a new build:  
 
     $ cd <image/directory>
     $ ./prepare -i apptest
@@ -109,8 +108,8 @@ Testing prior to a new build:
 > Application name............. apptest  
 > Running phx.new --install --no-ecto...  
 > ...  
-> * running mix deps.get
-> * running mix assets.setup
+> * running mix deps.get  
+> * running mix assets.setup  
 > * running mix deps.compile  
 > ...  
 >  
@@ -128,7 +127,7 @@ Testing prior to a new build:
 >
 
 
-The above 3 steps are completed by the prepare script with -f flag:
+The above 3 steps are completed by the prepare script with -f flag:  
 
 
     $ ./prepare -f
@@ -137,9 +136,9 @@ The above 3 steps are completed by the prepare script with -f flag:
 >
 > Compiling 14 files (.ex)  
 > Generated apptest app  
-> [info] Running ApptestWeb.Endpoint with cowboy 2.10.0 at 0.0.0.0:4000 (http)
-> [info] Access ApptestWeb.Endpoint at http://localhost:4000
-> [debug] Downloading esbuild from https://registry.npmjs.org/@esbuild/linux-x64/0.17.11
+> [info] Running ApptestWeb.Endpoint with cowboy 2.10.0 at 0.0.0.0:4000 (http)  
+> [info] Access ApptestWeb.Endpoint at http://localhost:4000  
+> [debug] Downloading esbuild from https://registry.npmjs.org/@esbuild/linux-x64/0.17.11  
 >
 > Rebuilding...  
 > [watch] build finished, watching for changes...  
@@ -149,35 +148,35 @@ The above 3 steps are completed by the prepare script with -f flag:
 
 
 Prepare -f finalizes the configuration and brings the docker container up in 
-the foreground. 
+the foreground.  
 
 
-In a separate terminal session, confirm the application is running:
+In a separate terminal session, confirm the application is running:  
 
     $ curl -X 'GET' http://localhost:4000
 
 `
-<!-- <ApptestWeb.Layouts.root> lib/apptest_web/components/layouts/root.html.heex:1 --><!DOCTYPE html>
-<html lang="en" class="[scrollbar-gutter:stable]">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="LT8sMxZVDDJOXDckWgEJOBsaCTF2cj5ffIYfA2CfziVuc2qTpnMp45w-">
-    <title data-suffix=" · Phoenix Framework">
-Apptest
-     · Phoenix Framework</title><!-- </Phoenix.Component.live_title> -->
-    <link phx-track-static rel="stylesheet" href="/assets/app.css">
-    <script defer phx-track-static type="text/javascript" src="/assets/app.js">
-    </script>
-  </head>
-  <body class="bg-white antialiased"> 
+<!-- <ApptestWeb.Layouts.root> lib/apptest_web/components/layouts/root.html.heex:1 --><!DOCTYPE html>  
+<html lang="en" class="[scrollbar-gutter:stable]">  
+  <head>  
+    <meta charset="utf-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <meta name="csrf-token" content="LT8sMxZVDDJOXDckWgEJOBsaCTF2cj5ffIYfA2CfziVuc2qTpnMp45w-">  
+    <title data-suffix=" · Phoenix Framework">  
+Apptest  
+     · Phoenix Framework</title><!-- </Phoenix.Component.live_title> -->  
+    <link phx-track-static rel="stylesheet" href="/assets/app.css">  
+    <script defer phx-track-static type="text/javascript" src="/assets/app.js">  
+    </script>  
+  </head>  
+  <body class="bg-white antialiased">  
   ...  
-  <iframe hidden height="0" width="0" src="/phoenix/live_reload/frame"></iframe></body>
-</html><!-- </ApptestWeb.Layouts.root> -->%
+  <iframe hidden height="0" width="0" src="/phoenix/live_reload/frame"></iframe></body>  
+</html><!-- </ApptestWeb.Layouts.root> -->%  
 `
 
 
-Output from testapp runtime terminal:
+Output from testapp runtime terminal:  
 
 
 >
@@ -188,34 +187,34 @@ Output from testapp runtime terminal:
 > [info] Sent 200 in 760µs  
 >
 
-Press ctrl-c a to stop the running testapp
+Press ctrl-c a to stop the running testapp  
 
 
 ## Application Testing
 
 
-The Avium Labs Phoenix docker image includes the MIX\_ENV environment variable
-in its Dockerfile. 
+The Avium Labs Phoenix docker image includes the MIX\_ENV environment variable 
+in the Dockerfile.   
 
-The `prepare` script creates a docker environment file - .env in the 
-applications root directory. Change the MIX\_ENV variable to `test` before 
-running the mix test task.  
+The `prepare` script creates a docker environment file - .env in the  
+applications root directory. Change the MIX\_ENV variable to `test` before  
+running the mix test task.   
 
-`MIX_ENV=test` 
+`MIX_ENV=test`  
 
 Run docker compose down/docker compose up to load the updated configuration and 
-then run `mix test`. 
+then run `mix test`.   
 
 Change the MIX\_ENV setting back to `dev`, run docker compose down/up to go back 
-to development mode. 
+to development mode.   
 
 
 ### Docker Hub
 
 
-Internal notes for pushing images to Docker Hub. 
+Internal notes for pushing images to Docker Hub.  
 
-    $ docker push aviumlabs/phoenix:<tagname>-alpine
+    $ docker push aviumlabs/phoenix:<tagname>-alpine  
 
  
-    $ docker push aviumlabs/phoenix:latest-alpine
+    $ docker push aviumlabs/phoenix:latest-alpine  
