@@ -163,7 +163,8 @@ In a separate terminal session, confirm the application is running:
 
   
 >
-> <!-- <ApptestWeb.Layouts.root> lib/apptest_web/components/layouts/root.html.heex:1 --><!DOCTYPE html>  
+> <!-- <ApptestWeb.Layouts.root> lib/apptest_web/components/layouts/root.html.heex:1 -->
+> <!DOCTYPE html>  
 > <html lang="en" class="[scrollbar-gutter:stable]">  
 > <head>  
 > <meta charset="utf-8">  
