@@ -184,7 +184,7 @@ In a separate terminal session, confirm the application is running:
 >  
 
 
-Output from testapp runtime terminal:  
+Output from apptest runtime terminal:  
 
 >
 > [info] GET /  
