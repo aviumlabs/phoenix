@@ -194,7 +194,7 @@ Output from testapp runtime terminal:
 > [info] Sent 200 in 760µs  
 >
 
-Press ctrl-c a to stop the running testapp  
+Press ctrl-c a to stop running apptest  
 
 
 ## Application Testing
