@@ -151,7 +151,7 @@ initialize() {
 		printf "Running phx.new --install --no-ecto...\n"
 		docker run --rm -w "$APP_CONTAINER_ROOT" \
 			--mount type=bind,src="$(pwd)/src",target=$APP_CONTAINER_ROOT \
-			$PHX_IMAGE mix phx.new --install --no-ecto $APP_NAME
+			$PHX_IMAGE mix phx.new --install --no-ecto $APP_NAME --binary-id
 	else
 		usage
 	fi
