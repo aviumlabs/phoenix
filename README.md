@@ -69,8 +69,11 @@ version you want to build:
 
 
 ### Template Repo
+
+
 This repo is a template repo.  
 GitHub documentation for using a template repository is here:  
+
 
     https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 
@@ -82,9 +85,12 @@ GitHub documentation for using a template repository is here:
 There is a companion project to this project for building a Phoenix Framework 
 project integrated with PostgreSQL.  
 
+
     https://github.com/aviumlabs/phoenix-compose.git
 
-The aviumlabs/phoenix-compose repo is a template repository.   
+
+The aviumlabs/phoenix-compose repo is also a template repository.   
+
 
 The services included are:  
 - PostgreSQL 15.4  
@@ -157,18 +163,31 @@ In a separate terminal session, confirm the application is running:
 
 >  
 > <!-- <ApptestWeb.Layouts.root> lib/apptest_web/components/layouts/root.html.heex:1 --><!DOCTYPE html>  
+>   
 > <html lang="en" class="[scrollbar-gutter:stable]">  
+>
 >  <head>  
+>
 >    <meta charset="utf-8">  
+> 
 >    <meta name="viewport" content="width=device-width, initial-scale=1">  
+>
 >    <meta name="csrf-token" content="LT8sMxZVDDJOXDckWgEJOBsaCTF2cj5ffIYfA2CfziVuc2qTpnMp45w-">  
+>
 >    <title data-suffix=" · Phoenix Framework">  
+>
 > Apptest  
+>
 >     · Phoenix Framework</title><!-- </Phoenix.Component.live_title> -->  
+>
 >    <link phx-track-static rel="stylesheet" href="/assets/app.css">  
+>
 >    <script defer phx-track-static type="text/javascript" src="/assets/app.js">  
+>
 >    </script>  
+>
 >  </head>  
+>
 >  <body class="bg-white antialiased">  
 >  ...  
 >  <iframe hidden height="0" width="0" src="/phoenix/live_reload/frame"></iframe></body>  
