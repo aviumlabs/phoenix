@@ -93,7 +93,7 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 
 The services included are:  
-- PostgreSQL 15.4  
+- PostgreSQL 16.1  
 - Phoenix Framework 1.7.10 or later  
 
 
