@@ -48,10 +48,12 @@ Where version is either numeric based on the Phoenix version or the literal
 
 The image defaults to building the latest version of Phoenix Framework.   
 
+
     $ docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
 
 
 Update the base image:
+
 
     $ docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
 
@@ -94,7 +96,7 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 The services included are:  
 - PostgreSQL 16.1  
-- Phoenix Framework 1.7.10 or later  
+- Phoenix Framework 1.7.11 or later  
 
 
 ## Project Notes
