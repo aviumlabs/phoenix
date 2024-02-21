@@ -70,7 +70,31 @@ version you want to build:
     --build-arg PHX_VERSION=$PHX_VERSION .
 
 
-### Template Repo
+## Run
+
+
+Run the docker image and confirm alpine version, postgresql client version:
+
+
+    $ docker run -it --rm aviumlabs/phoenix:latest-alpine /bin/sh
+
+    /opt # cat /etc/alpine-release
+
+
+>
+> 3.19.1
+>
+
+
+    /opt # psql --version
+
+
+> 
+> psql (PostgreSQL) 16.2
+> 
+
+
+## Template Repo
 
 
 This repo is a template repo.  
@@ -95,7 +119,7 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 
 The services included are:  
-- PostgreSQL 16.1  
+- PostgreSQL 16.2  
 - Phoenix Framework 1.7.11 or later  
 
 

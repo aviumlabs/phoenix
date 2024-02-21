@@ -16,7 +16,7 @@ RUN apk add --no-cache \
     make \
     gcc \
     musl-dev \
-    postgresql15-client \ 
+    postgresql16-client \ 
     inotify-tools \
     git \
     nodejs \
