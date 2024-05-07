@@ -5,8 +5,9 @@ This repo builds a Phoenix Framework docker image.
 
 This image is based on the Elixir Alpine docker image.   
 
-The included `prepare` script will 
-create a Phoenix Framework project without database support.   
+The included `prepare` script will create a Phoenix Framework project without 
+database support. It sets the container name to the same name given to the 
+application.
 
 
 ## Naming Convention
@@ -65,7 +66,7 @@ To build a specific version of the Phoenix Framework; pass in the Phoenix
 version you want to build:   
 
 
-    export PHX_VERSION=1.7.10
+    export PHX_VERSION=1.7.11
 
     docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
     --build-arg PHX_VERSION=$PHX_VERSION .
@@ -263,6 +264,7 @@ to development mode.
 
 
 Internal notes for pushing images to Docker Hub.  
+
 
     docker push aviumlabs/phoenix:<tagname>-alpine  
 

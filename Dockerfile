@@ -22,6 +22,7 @@ RUN apk add --no-cache \
     nodejs \
     npm \
     && npm install npm@latest -g \
+    && npm install aws-lambda-ric -g \
     && mix local.hex --force \
     && mix archive.install hex phx_new $PHX_VERSION --force \
     && mix local.rebar --force
