@@ -49,13 +49,13 @@ Where version is either numeric based on the Phoenix version or the literal
 The image defaults to building the latest version of Phoenix Framework.   
 
 
-    $ docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
+    docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
 
 
 Update the base image:
 
 
-    $ docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
+    docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
 
  
 ### Specific Version
@@ -65,8 +65,9 @@ To build a specific version of the Phoenix Framework; pass in the Phoenix
 version you want to build:   
 
 
-    $ export PHX_VERSION=1.7.10
-    $ docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
+    export PHX_VERSION=1.7.10
+
+    docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
     --build-arg PHX_VERSION=$PHX_VERSION .
 
 
@@ -76,7 +77,7 @@ version you want to build:
 Run the docker image and confirm alpine version, postgresql client version:
 
 
-    $ docker run -it --rm aviumlabs/phoenix:latest-alpine /bin/sh
+    docker run -it --rm aviumlabs/phoenix:latest-alpine /bin/sh
 
     /opt # cat /etc/alpine-release
 
@@ -103,6 +104,19 @@ GitHub documentation for using a template repository is here:
 
     https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 
+
+### Create and Clone a New Repository with GitHub CLI
+
+
+    gh repo create <application_name> -c -d "Application description" \
+    --private|public -p aviumlabs/phoenix 
+
+
+Created repository \<github\_userid\>\<application\_name\>  on GitHub  
+Cloning into '\<application\_name\>'...  
+
+
+---
 
 
 ## Companion Project
@@ -132,7 +146,8 @@ The services included are:
 Testing prior to a new build:  
 
     $ cd <image/directory>
-    $ ./prepare -i apptest
+
+    ./prepare -i apptest
 
 >
 > Initializing Phoenix Framework project...  
@@ -162,7 +177,7 @@ Testing prior to a new build:
 The above 3 steps are completed by the prepare script with -f flag:  
 
 
-    $ ./prepare -f
+    ./prepare -f
 
 
 >
@@ -185,7 +200,8 @@ the foreground.
 
 In a separate terminal session, confirm the application is running:  
 
-    $ curl -X 'GET' http://localhost:4000
+
+    curl -X 'GET' http://localhost:4000
 
   
 >
@@ -220,6 +236,7 @@ Output from apptest runtime terminal:
 > [info] Sent 200 in 760µs  
 >
 
+
 Press ctrl-c a to stop running apptest  
 
 
@@ -247,7 +264,7 @@ to development mode.
 
 Internal notes for pushing images to Docker Hub.  
 
-    $ docker push aviumlabs/phoenix:<tagname>-alpine  
+    docker push aviumlabs/phoenix:<tagname>-alpine  
 
  
-    $ docker push aviumlabs/phoenix:latest-alpine  
+    docker push aviumlabs/phoenix:latest-alpine  
