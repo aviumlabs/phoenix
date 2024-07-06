@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM elixir:1.16.2-alpine
+FROM elixir:1.17-alpine
 
 ARG PHX_VERSION=''
 ARG APP_ROOT=/opt
@@ -9,7 +9,7 @@ ENV DATABASE_URL=''
 ENV MIX_ENV=''
 ENV PORT=4000
 
-WORKDIR $APP_ROOT
+ENV WORKDIR=$APP_ROOT
 
 RUN apk add --no-cache \
     openssl \
