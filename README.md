@@ -84,7 +84,7 @@ Run the docker image and confirm alpine version, postgresql client version:
 
 
 >
-> 3.19.1
+> 3.19.2
 >
 
 
@@ -92,7 +92,7 @@ Run the docker image and confirm alpine version, postgresql client version:
 
 
 > 
-> psql (PostgreSQL) 16.2
+> psql (PostgreSQL) 16.3
 > 
 
 
@@ -134,8 +134,8 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 
 The services included are:  
-- PostgreSQL 16.2  
-- Phoenix Framework 1.7.12 or later  
+- PostgreSQL 16.3  
+- Phoenix Framework 1.7.14 or later  
 
 
 ## Project Notes
@@ -181,18 +181,20 @@ The above 3 steps are completed by the prepare script with -f flag:
     ./prepare -f
 
 
->
-> Compiling 14 files (.ex)  
+>  
+> ...  
+> Compiling 15 files (.ex)  
 > Generated apptest app  
-> [info] Running ApptestWeb.Endpoint with cowboy 2.10.0 at 0.0.0.0:4000 (http)  
+> ...  
+> [info] Running ApptestWeb.Endpoint with Bandit 1.5.5 at 0.0.0.0:4000 (http)  
 > [info] Access ApptestWeb.Endpoint at http://localhost:4000  
-> [debug] Downloading esbuild from https://registry.npmjs.org/@esbuild/linux-x64/0.17.11  
->
-> Rebuilding...  
 > [watch] build finished, watching for changes...  
-> 
-> Done in 765ms.  
->
+>  
+> Rebuilding...  
+>   
+> Done in 742ms.  
+> ...  
+>  
 
 
 Prepare -f finalizes the configuration and brings the docker container up in 
