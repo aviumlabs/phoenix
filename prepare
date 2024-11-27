@@ -29,7 +29,7 @@ IFS=$'\n\t'
 
 # Defaults
 ENV_FILE=$(pwd)/.env
-APP_CONTAINER_ROOT=/opt
+APP_CONTAINER_ROOT=/opt/phoenix
 PHX_IMAGE=aviumlabs/phoenix:latest-alpine
 MIX_ENV=dev                                 # dev, test, prod
 
@@ -42,17 +42,15 @@ usage() {
 	printf "  aviumlabs/phoenix:latest-alpine.\n"
 	printf "\n"
 	printf "Project preparation is done in a two step process: \n"
-	printf "Step 1: Initialize Phoenix Framework project docker container root\n" 
+	printf "Step 1: Initialize Phoenix Framework project docker container\n" 
 	printf "        and the application name.\n"
 	printf "\n"
 	printf "Step 2: Finalize the Phoenix Framework project.\n"
 	printf "\n"
-	printf "$0 -i <app_name> [-r </app/container/root>]\n"
+	printf "$0 -i <app_name>\n"
 	printf "$0 -f\n"
 	printf "\n Details: \n"
 	printf "           -i specify the name of the application.\n"
-	printf "           -r specify the application's container root\n"
-	printf "              directory, defaults to /opt.\n"
 	printf "           -f finalize the Phoenix Framework project,\n"
 	printf "              updates the config/dev.exs file and the\n"
 	printf "              docker environment file.\n"
@@ -80,10 +78,6 @@ while getopts ${optstring} arg; do
 			i)
 				INIT='true'
 				APP_NAME=${OPTARG};
-				;;
-			r)
-				INIT='true'
-				APP_CONTAINER_ROOT=${OPTARG}
 				;;
 			h)
 				usage

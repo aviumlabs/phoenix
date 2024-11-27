@@ -66,7 +66,7 @@ To build a specific version of the Phoenix Framework; pass in the Phoenix
 version you want to build:   
 
 
-    export PHX_VERSION=1.7.11
+    export PHX_VERSION=1.7.13
 
     docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
     --build-arg PHX_VERSION=$PHX_VERSION .
@@ -92,7 +92,7 @@ Run the docker image and confirm alpine version, postgresql client version:
 
 
 > 
-> psql (PostgreSQL) 16.3
+> psql (PostgreSQL) 16.6
 > 
 
 
@@ -134,7 +134,7 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 
 The services included are:  
-- PostgreSQL 16.3  
+- PostgreSQL 16.6  
 - Phoenix Framework 1.7.14 or later  
 
 
@@ -144,25 +144,25 @@ The services included are:
 ### Project Testing
 
 
-Testing prior to a new build:  
+Testing a new build:  
 
     $ cd <image/directory>
 
     ./prepare -i apptest
 
 >
-> Initializing Phoenix Framework project...  
-> Application container root... /opt  
-> Application name............. apptest  
-> Running phx.new --install --no-ecto...  
-> ...  
-> * running mix deps.get  
-> * running mix assets.setup  
-> * running mix deps.compile  
-> ...  
->  
-> We are almost there! The following steps are missing:  
->  
+> Initializing Phoenix Framework project...
+> Application container root... /opt/phoenix
+> Application name............. apptest
+> Running phx.new --install --no-ecto...
+> ...
+> * running mix deps.get
+> * running mix assets.setup
+> * running mix deps.compile
+> ...
+>
+> We are almost there! The following steps are missing:
+>
 >    $ cd testapp  
 >  
 > Start your Phoenix app with:  
@@ -183,16 +183,16 @@ The above 3 steps are completed by the prepare script with -f flag:
 
 >  
 > ...  
-> Compiling 15 files (.ex)  
+> Compiling 14 files (.ex)  
 > Generated apptest app  
 > ...  
-> [info] Running ApptestWeb.Endpoint with Bandit 1.5.5 at 0.0.0.0:4000 (http)  
+> [info] Running ApptestWeb.Endpoint with Bandit 1.6.0 at 0.0.0.0:4000 (http)  
 > [info] Access ApptestWeb.Endpoint at http://localhost:4000  
 > [watch] build finished, watching for changes...  
 >  
 > Rebuilding...  
 >   
-> Done in 742ms.  
+> Done in 720ms.  
 > ...  
 >  
 
