@@ -43,6 +43,8 @@ Where version is either numeric based on the Phoenix version or the literal
 
 ## Build
 
+The build is switched to include the Software Bill of Materials and Provenance attestations.
+
 
 ### Latest
 
@@ -52,11 +54,16 @@ The image defaults to building the latest version of Phoenix Framework.
 
     docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
 
+    docker build --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
+
 
 Update the base image:
 
 
     docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
+
+
+    docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
 
  
 ### Specific Version
@@ -80,11 +87,11 @@ Run the docker image and confirm alpine version, postgresql client version:
 
     docker run -it --rm aviumlabs/phoenix:latest-alpine /bin/sh
 
-    /opt # cat /etc/alpine-release
+    / $ cat /etc/alpine-release
 
 
 >
-> 3.19.2
+> 3.20.3
 >
 
 
