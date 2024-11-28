@@ -33,4 +33,6 @@ RUN apk add --no-cache \
 
 EXPOSE 4000-4025
 
+USER phoenix
+
 CMD ["mix", "phx.server"]
