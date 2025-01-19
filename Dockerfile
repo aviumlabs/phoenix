@@ -24,9 +24,9 @@ RUN apk add --no-cache \
     postgresql16-client \ 
     inotify-tools \
     git \
-    nodejs \
-    npm \
-    && npm install npm@latest -g \
+    #nodejs \
+    #npm \
+    #&& npm install npm@latest -g \
     && mix local.hex --force \
     && mix archive.install hex phx_new $PHX_VERSION --force \
     && mix local.rebar --force
