@@ -59,7 +59,7 @@ phx_config() {
 		update_file="$PHX_HOME/$APP_NAME/config/test.exs"
 		if [[ $ECTO == 'y' ]]; then
 			get_db_pwd		
-			sed -i '' -e "s|\(password: \).*|\1"$DB_PPWD"|" \
+			sed -i '' -e "s|\(password: \).*|\1"$DB_PWD"|" \
 			-e 's|"localhost"|"db"|' \
 			-e 's|127, 0, 0, 1|0, 0, 0, 0|' $update_file >/dev/null 2>&1
 		else	
