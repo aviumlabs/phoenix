@@ -28,6 +28,3 @@ src/**/_checkouts/
 *.swp
 *.swo
 *.swn
-
-# src directory, ignore for the template repository, only for testing image
-src

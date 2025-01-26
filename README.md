@@ -1,17 +1,40 @@
 # A Phoenix Framework Repo
 
-
 This repo builds a Phoenix Framework docker image. 
 
-This image is based on the Elixir Alpine docker image.   
+The image is based on the Elixir Alpine docker image.   
 
-The included `prepare` script will create a Phoenix Framework project without 
-database support. It sets the container name to the same name given to the 
-application.
+
+
+
+
+## Recent Changes
+
+Added __phoenix__ system account and set /opt/phoenix as the default 
+container directory. 
+
+The prepare script has been internalized and the functionality moved 
+to the docker-entrypoint.sh file.
+
+Running the container now depends on a couple of environment variables 
+to be passed to the container.
+
+APP_NAME - the name of the Phoenix application to be setup or run.
+ECTO - a y/n flag (defaults to n) to include database support in the 
+       Phoenix application
+
+Ecto support in the docker-entrypoint script is designed to work with a docker 
+compose project (see Companion Project below) to read the database secret from 
+docker secrets.
+
+Mix and hex are now installed under the /opt/phoenix directory.
+
+
+Temporarily removed nodejs and npm due to incompatabilities between Phoenix 
+v1.7.18 and Alpine 3.20. 
 
 
 ## Naming Convention
-
 
 The naming convention is branched into **Standard** and **Extended** and is 
 based on similar projects based on the Alpine Linux distribution, where 
@@ -27,7 +50,6 @@ version of Elixir or the cutting edge version of Elixir.
 
 ### Standard Naming Convention
 
-
     aviumlabs/phoenix:<version | latest>-alpine
 
 
@@ -36,8 +58,7 @@ Where version is either numeric based on the Phoenix version or the literal
 
 
 ### Extended Naming Convention
-
-
+ 
     aviumlabs/phoenix:<version | latest>-elixir<version>-alpine
 
 
@@ -46,83 +67,115 @@ Where version is either numeric based on the Phoenix version or the literal
 The build is switched to include the Software Bill of Materials and Provenance attestations.
 
 
-### Latest
+### Latest Phoenix Version 
+
+This is the default - builds the latest version of Phoenix Framework.   
+
+```shell
+# regular build
+docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
+
+# include sbom and provenance
+docker build --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
+```
 
 
-The image defaults to building the latest version of Phoenix Framework.   
+__Update the base image__
 
+```shell
+# regular build
+docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
 
-    docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
-
-    docker build --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
-
-
-Update the base image:
-
-
-    docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
-
-
-    docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
+# include sbom and provenance
+docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
+```
 
  
-### Specific Version
-
+### Specific Phoenix Version
 
 To build a specific version of the Phoenix Framework; pass in the Phoenix 
 version you want to build:   
 
 
-    export PHX_VERSION=1.7.13
+```shell
+export PHX_VERSION=1.7.16
 
-    docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
-    --build-arg PHX_VERSION=$PHX_VERSION .
-
+docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
+--build-arg PHX_VERSION=$PHX_VERSION --provenance=mode=max --sbom=true .
+```
 
 ## Run
 
 
 Run the docker image and confirm alpine version, postgresql client version:
 
+```shell
+# Running Without Ecto
+# Runs the container in the foreground
+docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
 
-    docker run -it --rm aviumlabs/phoenix:latest-alpine /bin/sh
+# Running With Ecto - Will not work outside of docker compose
+docker run --name app -it -e ECTO=y -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
 
-    / $ cat /etc/alpine-release
+
+# Open an additional shell 
+cat /etc/alpine-release
 
 
 >
-> 3.20.3
+> 3.20.5
 >
 
 
-    /opt # psql --version
+    psql --version
 
 
 > 
 > psql (PostgreSQL) 16.6
 > 
+```
 
+## Application Development
 
-## Template Repo
+This docker image is designed to work with the host filesystem and the GitHub 
+repository is a template repository.
 
-
-This repo is a template repo.  
-GitHub documentation for using a template repository is here:  
-
-
-    https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
-
+To create your initial application development environment run the `gh repo create` 
+command.
 
 ### Create and Clone a New Repository with GitHub CLI
 
+General command
+`gh repo create <application_name> -c -d "Application description" \
+--private|--public -p aviumlabs/phoenix`
 
-    gh repo create <application_name> -c -d "Application description" \
-    --private|public -p aviumlabs/phoenix 
 
+__Flags__
 
-Created repository \<github\_userid\>\<application\_name\>  on GitHub  
-Cloning into '\<application\_name\>'...  
+-c specifies to clone the repository to the current working directory
+-d description of the new repository to be created
+--private|--public specifies if this a private or public repository
+-p make the new repository based on this template repository
 
+```shell
+# Example 
+export APP_NAME=myapp
+gh repo create $APP_NAME -c -d "My First Application" --private \
+-p aviumlabs/phoenix
+```
+
+> 
+> Created repository \<github\_userid\>myapp  on GitHub 
+> Cloning into myapp...  
+> 
+
+The directory structure should now look like this:
+* myapp
+  * /src
+* 
+
+__References__
+* https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 
 ---
 
@@ -142,7 +195,7 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 The services included are:  
 - PostgreSQL 16.6  
-- Phoenix Framework 1.7.14 or later  
+- Phoenix Framework 1.7.18 or later  
 
 
 ## Project Notes
@@ -151,61 +204,6 @@ The services included are:
 ### Project Testing
 
 
-Testing a new build:  
-
-    $ cd <image/directory>
-
-    ./prepare -i apptest
-
->
-> Initializing Phoenix Framework project...
-> Application container root... /opt/phoenix
-> Application name............. apptest
-> Running phx.new --install --no-ecto...
-> ...
-> * running mix deps.get
-> * running mix assets.setup
-> * running mix deps.compile
-> ...
->
-> We are almost there! The following steps are missing:
->
->    $ cd testapp  
->  
-> Start your Phoenix app with:  
->  
->    $ mix phx.server  
->  
-> You can also run your app inside IEx (Interactive Elixir) as:  
->  
->    $ iex -S mix phx.server  
->
-
-
-The above 3 steps are completed by the prepare script with -f flag:  
-
-
-    ./prepare -f
-
-
->  
-> ...  
-> Compiling 14 files (.ex)  
-> Generated apptest app  
-> ...  
-> [info] Running ApptestWeb.Endpoint with Bandit 1.6.0 at 0.0.0.0:4000 (http)  
-> [info] Access ApptestWeb.Endpoint at http://localhost:4000  
-> [watch] build finished, watching for changes...  
->  
-> Rebuilding...  
->   
-> Done in 720ms.  
-> ...  
->  
-
-
-Prepare -f finalizes the configuration and brings the docker container up in 
-the foreground.  
 
 
 In a separate terminal session, confirm the application is running:  
@@ -255,10 +253,6 @@ Press ctrl-c a to stop running apptest
 
 The Avium Labs Phoenix docker image includes the MIX\_ENV environment variable 
 in the Dockerfile.   
-
-The `prepare` script creates a docker environment file - .env in the  
-applications root directory. Change the MIX\_ENV variable to `test` before  
-running the mix test task.   
 
 `MIX_ENV=test`  
 
