@@ -13,19 +13,24 @@ The image is based on the Elixir Alpine docker image.
 Added __phoenix__ system account and set /opt/phoenix as the default 
 container directory. 
 
+
 The prepare script has been internalized and the functionality moved 
 to the docker-entrypoint.sh file.
+
 
 Running the container now depends on a couple of environment variables 
 to be passed to the container.
 
-APP_NAME - the name of the Phoenix application to be setup or run.
-ECTO - a y/n flag (defaults to n) to include database support in the 
+
+* APP_NAME - the name of the Phoenix application to be setup or run.
+* ECTO - a y/n flag (defaults to n) to include database support in the 
        Phoenix application
+
 
 Ecto support in the docker-entrypoint script is designed to work with a docker 
 compose project (see Companion Project below) to read the database secret from 
 docker secrets.
+
 
 Mix and hex are now installed under the /opt/phoenix directory.
 
@@ -36,6 +41,7 @@ v1.7.18 and Alpine 3.20.
 
 ## Naming Convention
 
+
 The naming convention is branched into **Standard** and **Extended** and is 
 based on similar projects based on the Alpine Linux distribution, where 
 `-alpine` is appended to the end of the tag.  
@@ -43,6 +49,7 @@ based on similar projects based on the Alpine Linux distribution, where
 
 The **Standard** branch is based on the latest stable version of Elixir 
 provided by the Elixir docker image.   
+
 
 The **Extended** branch may either be based on the previous stable 
 version of Elixir or the cutting edge version of Elixir.   
@@ -64,7 +71,7 @@ Where version is either numeric based on the Phoenix version or the literal
 
 ## Build
 
-The build is switched to include the Software Bill of Materials and Provenance attestations.
+The build command now includes the Software Bill of Materials and Provenance attestations.
 
 
 ### Latest Phoenix Version 
@@ -107,7 +114,7 @@ docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \
 ## Run
 
 
-Run the docker image and confirm alpine version, postgresql client version:
+Run the docker image and confirm Alpine version, PostgreSQL client version:
 
 ```shell
 # Running Without Ecto
@@ -121,14 +128,11 @@ docker run --name app -it -e ECTO=y -e APP_NAME=app --rm -p 4000:4000 --mount ty
 # Open an additional shell 
 cat /etc/alpine-release
 
-
 >
 > 3.20.5
 >
 
-
-    psql --version
-
+psql --version
 
 > 
 > psql (PostgreSQL) 16.6
@@ -140,22 +144,26 @@ cat /etc/alpine-release
 This docker image is designed to work with the host filesystem and the GitHub 
 repository is a template repository.
 
+
 To create your initial application development environment run the `gh repo create` 
 command.
+
 
 ### Create and Clone a New Repository with GitHub CLI
 
 General command
+
+
 `gh repo create <application_name> -c -d "Application description" \
 --private|--public -p aviumlabs/phoenix`
 
 
 __Flags__
 
--c specifies to clone the repository to the current working directory
--d description of the new repository to be created
---private|--public specifies if this a private or public repository
--p make the new repository based on this template repository
+* -c specifies to clone the repository to the current working directory
+* -d description of the new repository to be created
+* --private|--public specifies if this a private or public repository
+* -p make the new repository based on this template repository
 
 ```shell
 # Example 
