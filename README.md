@@ -167,20 +167,80 @@ __Flags__
 
 ```shell
 # Example 
-export APP_NAME=myapp
-gh repo create $APP_NAME -c -d "My First Application" --private \
+gh repo create myapp -c -d "My First Application" --private \
 -p aviumlabs/phoenix
 ```
 
 > 
-> Created repository \<github\_userid\>myapp  on GitHub 
+> Created repository \<github\_userid\>/myapp  on GitHub 
+> https://github.com/\<github\_userid\>/myapp
 > Cloning into myapp...  
 > 
 
 The directory structure should now look like this:
 * myapp
   * /src
-* 
+  * /docs
+    * /images
+    * /pdf
+* Dockerfile
+* LICENSE
+* README.md
+* docker-entrypoint.sh
+
+During the first-time run, the application will be configured, and the src 
+directory will be populated with the baseline Phoenix project.
+
+```shell
+docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/myapp aviumlabs/phoenix:latest-alpine 
+
+> 
+> Generated myapp app
+> [info] Running MyappWeb.Endpoint with Bandit 1.6.6 at 0.0.0.0:4000 (http)
+> [info] Access MyappWeb.Endpoint at http://localhost:4000
+> [watch] build finished, watching for changes...
+> 
+> Rebuilding...
+> 
+> Done in 740ms.
+> 
+```
+
+Browsing to http://localhost:4000 will show you the default landing page of a 
+Phoenix Webframework application.
+
+
+And listing the contents of src directory will show you the standard Phoenix 
+Webframework application layout.
+
+
+* README.md
+* assets
+* deps
+* _build
+* config 
+* lib
+* mix.exs
+* mix.lock
+* priv
+* test
+
+As a development environment, live\_reload is active. 
+
+Edit src/lib/my_webapp/controllers/page_html/home.html.eex
+
+Search for Phoenix Framework and insert some text like 
+MyApp hosted by Phoenix Framework.
+
+Save the file and go back to your browser and you will automatically see 
+the change. 
+
+Pretty awesome! Much gratitude and appreciation to the Phoenix Framework, 
+Elixir, and Erlang teams for their amazing work!
+
+
+From here it is up to you to build some amazing applications. Good luck!
+ 
 
 __References__
 * https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template

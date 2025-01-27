@@ -34,7 +34,7 @@ get_db_pwd() {
 		done < $DB_SECRET_FILE
 	else
 		printf "Database secret is not set, aborting install.\n"
-		exit 1
+		#exit 1
 	fi
 }
 
