@@ -24,17 +24,21 @@ PHX_HOME=/opt/phoenix
 ECTO="${ECTO:-n}"
 # docker secrets - db secret file
 DB_SECRET_FILE=/run/secrets/postgres_password
-DB_PWD=''
+DB_PWD="${DB_PWD:-}"
+APP_NAME="${APP_NAME:-}"
 
 get_db_pwd() {
-	# read the database password from a docker's secret file
-	if [ -f "$DB_SECRET_FILE" ]; then
-		while read -r secret; do
-			DB_PWD="$secret"
-		done < $DB_SECRET_FILE
-	else
-		printf "Database secret is not set, aborting install.\n"
-		#exit 1
+	# DB_PWD variable is optional for testing
+	if [[ -z $DB_PWD ]]; then
+		# read the database password from a docker's secret file
+		if [ -f "$DB_SECRET_FILE" ]; then
+			while read -r secret; do
+				DB_PWD="$secret"
+			done < $DB_SECRET_FILE
+		else
+			printf "Database secret is not set, aborting install.\n"
+			exit 1
+		fi
 	fi
 }
 
@@ -47,7 +51,7 @@ phx_config() {
 		update_file="$PHX_HOME/$APP_NAME/config/dev.exs"
 		if [[ $ECTO == 'y' ]]; then
 			get_db_pwd		
-			sed -i '' -e "s|\(password: \).*|\1"$DB_PWD"|" \
+			sed -i '' -e "s|\(password: \).*|\1"\"$DB_PWD\","|" \
 			-e 's|"localhost"|"db"|' \
 			-e 's|127, 0, 0, 1|0, 0, 0, 0|' $update_file >/dev/null 2>&1
 		else
@@ -59,7 +63,7 @@ phx_config() {
 		update_file="$PHX_HOME/$APP_NAME/config/test.exs"
 		if [[ $ECTO == 'y' ]]; then
 			get_db_pwd		
-			sed -i '' -e "s|\(password: \).*|\1"$DB_PWD"|" \
+			sed -i '' -e "s|\(password: \).*|\1"\"$DB_PWD\","|" \
 			-e 's|"localhost"|"db"|' \
 			-e 's|127, 0, 0, 1|0, 0, 0, 0|' $update_file >/dev/null 2>&1
 		else	

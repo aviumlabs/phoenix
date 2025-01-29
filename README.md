@@ -124,6 +124,7 @@ docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,sr
 # Running With Ecto - Will not work outside of docker compose
 docker run --name app -it -e ECTO=y -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
 
+docker run --name myapp -it -e ECTO=y -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
 
 # Open an additional shell 
 cat /etc/alpine-release
