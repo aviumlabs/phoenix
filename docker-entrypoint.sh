@@ -48,12 +48,14 @@ phx_config() {
 		printf "Updating dev.exs...\n"
 		update_file="$PHX_HOME/$APP_NAME/config/dev.exs"
 		if [[ $ECTO == 'y' ]]; then
-			printf "Reading DB password from file...\n"
 			get_db_pwd		
-			printf "debug: DB password is...$DB_PWD\n"
 			sed -i '' -e "s|\(password: \).*|\1"\"$DB_PWD\","|" \
 			-e 's|"localhost"|"db"|' \
 			-e 's|127, 0, 0, 1|0, 0, 0, 0|' $update_file >/dev/null 2>&1
+
+			# create the database
+			printf "Running create database...\n"
+			mix ecto.create
 		else
 			sed -i '' -e 's|127, 0, 0, 1|0, 0, 0, 0|' $update_file >/dev/null 2>&1
 		fi
@@ -71,6 +73,7 @@ phx_config() {
 		fi
 	fi
 }
+
 
 phx_install() {
 	# ensure APP_NAME has been set 
