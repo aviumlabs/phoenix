@@ -4,7 +4,7 @@ FROM elixir:1.17-alpine
 ARG PHX_VERSION=''
 
 ENV DATABASE_URL=''
-ENV MIX_ENV=''
+ENV MIX_ENV=dev
 ENV PORT=4000
 
 RUN set -eux; \
