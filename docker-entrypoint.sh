@@ -32,9 +32,7 @@ get_db_pwd() {
 	if [[ -z $DB_PWD ]]; then
 		# read the database password from a docker's secret file
 		if [ -f "$DB_SECRET_FILE" ]; then
-			while read -r secret; do
-				DB_PWD="$secret"
-			done < $DB_SECRET_FILE
+			DB_PWD=$(head -n 1 $DB_SECRET_FILE)
 		else
 			printf "Database secret is not set, aborting install.\n"
 			exit 1
