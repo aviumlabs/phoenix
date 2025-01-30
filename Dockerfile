@@ -2,12 +2,10 @@
 FROM elixir:1.17-alpine
 
 ARG PHX_VERSION=''
-ARG APP_ROOT=/opt/phoenix
 
 ENV DATABASE_URL=''
 ENV MIX_ENV=''
 ENV PORT=4000
-ENV WORKDIR=$APP_ROOT
 
 RUN set -eux; \
 	addgroup -g 935 -S phoenix; \

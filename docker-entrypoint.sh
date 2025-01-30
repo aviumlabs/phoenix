@@ -54,7 +54,6 @@ phx_config() {
 			-e 's|127, 0, 0, 1|0, 0, 0, 0|' $update_file >/dev/null 2>&1
 
 			# create the database
-			printf "Running create database...\n"
 			cd $PHX_HOME/$APP_NAME
 			mix ecto.create
 		else
