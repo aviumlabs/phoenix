@@ -5,9 +5,6 @@ This repo builds a Phoenix Framework docker image.
 The image is based on the Elixir Alpine docker image.   
 
 
-
-
-
 ## Recent Changes
 
 Added __phoenix__ system account and set /opt/phoenix as the default 
@@ -15,7 +12,7 @@ container directory.
 
 
 The prepare script has been internalized and the functionality moved 
-to the docker-entrypoint.sh file.
+to the docker-entrypoint.sh file. 
 
 
 Running the container now depends on a couple of environment variables 
@@ -27,31 +24,27 @@ to be passed to the container.
        Phoenix application
 
 
-Ecto support in the docker-entrypoint script is designed to work with a docker 
-compose project (see Companion Project below) to read the database secret from 
-docker secrets.
+Ecto support in the docker-entrypoint script is designed to work with the docker 
+phoenix-compose project (see Companion Project below).
 
 
 Mix and hex are now installed under the /opt/phoenix directory.
 
 
-Temporarily removed nodejs and npm due to incompatabilities between Phoenix 
-v1.7.18 and Alpine 3.20. 
+## Image Naming Convention
 
 
-## Naming Convention
+The image naming convention is divided between **Standard** and **Extended**.
+It is based on similar projects running Alpine Linux, where `-alpine` is 
+appended to the end of the tag.  
 
 
-The naming convention is branched into **Standard** and **Extended** and is 
-based on similar projects based on the Alpine Linux distribution, where 
-`-alpine` is appended to the end of the tag.  
+The **Standard** naming convention will attempt to be based on the latest 
+version of Alpine, Erlang, Elixir, and the Phoenix Framework except in the 
+case of where a conflict arises.  
 
 
-The **Standard** branch is based on the latest stable version of Elixir 
-provided by the Elixir docker image.   
-
-
-The **Extended** branch may either be based on the previous stable 
+The **Extended** naming convention may either be based on the previous stable 
 version of Elixir or the cutting edge version of Elixir.   
 
 
@@ -69,9 +62,7 @@ Where version is either numeric based on the Phoenix version or the literal
     aviumlabs/phoenix:<version | latest>-elixir<version>-alpine
 
 
-## Build
-
-The build command now includes the Software Bill of Materials and Provenance attestations.
+## Building an Image
 
 
 ### Latest Phoenix Version 
@@ -87,7 +78,8 @@ docker build --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max
 ```
 
 
-__Update the base image__
+__Update the Base Image__
+
 
 ```shell
 # regular build
@@ -100,13 +92,15 @@ docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=m
  
 ### Specific Phoenix Version
 
-To build a specific version of the Phoenix Framework; pass in the Phoenix 
+
+To build a specific version of Phoenix Framework; pass in the Phoenix 
 version you want to build:   
 
 
 ```shell
 export PHX_VERSION=1.7.16
 
+# replace aviumlabs with your docker namespace
 docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
 --build-arg PHX_VERSION=$PHX_VERSION --provenance=mode=max --sbom=true .
 ```
@@ -146,8 +140,8 @@ This docker image is designed to work with the host filesystem and the GitHub
 repository is a template repository.
 
 
-To create your initial application development environment run the `gh repo create` 
-command.
+To create your initial application development environment run the 
+`gh repo create` command.
 
 
 ### Create and Clone a New Repository with GitHub CLI
@@ -178,7 +172,7 @@ gh repo create myapp -c -d "My First Application" --private \
 > Cloning into myapp...  
 > 
 
-The directory structure should now look like this:
+The directory structure will now look like this:
 * myapp
   * /src
   * /docs
@@ -190,7 +184,7 @@ The directory structure should now look like this:
 * docker-entrypoint.sh
 
 During the first-time run, the application will be configured, and the src 
-directory will be populated with the baseline Phoenix project.
+directory will be populated with the baseline Phoenix Framwork application.
 
 ```shell
 docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/myapp aviumlabs/phoenix:latest-alpine 
@@ -208,11 +202,11 @@ docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bin
 ```
 
 Browsing to http://localhost:4000 will show you the default landing page of a 
-Phoenix Webframework application.
+Phoenix Framework application.
 
 
 And listing the contents of src directory will show you the standard Phoenix 
-Webframework application layout.
+Framework application layout.
 
 
 * README.md
@@ -231,13 +225,13 @@ As a development environment, live\_reload is active.
 Edit src/lib/my_webapp/controllers/page_html/home.html.eex
 
 Search for Phoenix Framework and insert some text like 
-MyApp hosted by Phoenix Framework.
+MyApp powered by Phoenix Framework.
 
 Save the file and go back to your browser and you will automatically see 
 the change. 
 
 Pretty awesome! Much gratitude and appreciation to the Phoenix Framework, 
-Elixir, and Erlang teams for their amazing work!
+Elixir, Erlang, Alpine, and PostgreSQL teams for their amazing work!
 
 
 From here it is up to you to build some amazing applications. Good luck!
@@ -271,8 +265,6 @@ The services included are:
 
 
 ### Project Testing
-
-
 
 
 In a separate terminal session, confirm the application is running:  
@@ -314,22 +306,7 @@ Output from apptest runtime terminal:
 >
 
 
-Press ctrl-c a to stop running apptest  
-
-
-## Application Testing
-
-
-The Avium Labs Phoenix docker image includes the MIX\_ENV environment variable 
-in the Dockerfile.   
-
-`MIX_ENV=test`  
-
-Run docker compose down/docker compose up to load the updated configuration and 
-then run `mix test`.   
-
-Change the MIX\_ENV setting back to `dev`, run docker compose down/up to go back 
-to development mode.   
+Press ctrl-c a to stop running apptest    
 
 
 ### Docker Hub
