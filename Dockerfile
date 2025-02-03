@@ -17,7 +17,7 @@ RUN apk add --no-cache \
     make \
     gcc \
     musl-dev \
-    postgresql16-client \ 
+    postgresql17-client \ 
     inotify-tools \
     git
 
