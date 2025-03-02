@@ -98,7 +98,7 @@ version you want to build:
 
 
 ```shell
-export PHX_VERSION=1.7.16
+export PHX_VERSION=1.7.20
 
 # replace aviumlabs with your docker namespace
 docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
@@ -124,13 +124,13 @@ docker run --name myapp -it -e ECTO=y -e APP_NAME=myapp --rm -p 4000:4000 --moun
 cat /etc/alpine-release
 
 >
-> 3.20.5
+> 3.21.3
 >
 
 psql --version
 
 > 
-> psql (PostgreSQL) 16.6
+> psql (PostgreSQL) 17.4
 > 
 ```
 
@@ -191,7 +191,7 @@ docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bin
 
 > 
 > Generated myapp app
-> [info] Running MyappWeb.Endpoint with Bandit 1.6.6 at 0.0.0.0:4000 (http)
+> [info] Running MyappWeb.Endpoint with Bandit 1.6.7 at 0.0.0.0:4000 (http)
 > [info] Access MyappWeb.Endpoint at http://localhost:4000
 > [watch] build finished, watching for changes...
 > 
@@ -257,8 +257,8 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 
 The services included are:  
-- PostgreSQL 16.6  
-- Phoenix Framework 1.7.18 or later  
+- PostgreSQL 17.4 
+- Phoenix Framework 1.7.20 or later  
 
 
 ## Project Notes
@@ -274,39 +274,31 @@ In a separate terminal session, confirm the application is running:
 
   
 >
-> \<!-- \<ApptestWeb.Layouts.root> lib/apptest\_web/components/layouts/root.html.heex:1 -->
-> \<!DOCTYPE html>  
-> \<html lang="en" class="[scrollbar-gutter:stable]">  
-> \<head>  
-> \<meta charset="utf-8">  
-> \<meta name="viewport" content="width=device-width, initial-scale=1">  
-> \<meta name="csrf-token" content="LT8sMxZVDDJOXDckWgEJOBsaCTF2cj5ffIYfA2CfziVuc2qTpnMp45w-">  
-> \<title data-suffix=" · Phoenix Framework">  
-> Apptest  
-> · Phoenix Framework\</title>\<!-- \</Phoenix.Component.live\_title> -->  
-> \<link phx-track-static rel="stylesheet" href="/assets/app.css">  
-> \<script defer phx-track-static type="text/javascript" src="/assets/app.js">  
-> \</script>  
-> \</head>  
-> \<body class="bg-white antialiased">  
+> <!-- \<AppWeb.Layouts.root> lib/app_web/components/layouts/root.html.heex:1 -->  
+> <!DOCTYPE html>  
+> <html lang="en" class="[scrollbar-gutter:stable]">  
+> <head>  
+> <meta charset="utf-8">  
+> <meta name="viewport" content="width=device-width, initial-scale=1">  
 > ...  
-> \<iframe hidden height="0" width="0" src="/phoenix/live\_reload/frame">\</iframe>\</body>  
-> \</html>\<!-- \</ApptestWeb.Layouts.root> -->
+> <title data-default="App" data-suffix=" · Phoenix Framework"> ...  
+> <iframe hidden height="0" width="0" src="/phoenix/live\_reload/frame">\</iframe>\</body>  
+> </html>\<!-- \</AppWeb.Layouts.root> -->
 >  
 
 
-Output from apptest runtime terminal:  
+Output from app runtime terminal:  
 
 >
 > [info] GET /  
-> [debug] Processing with ApptestWeb.PageController.home/2  
+> [debug] Processing with AppWeb.PageController.home/2  
 >  Parameters: %{}  
 >  Pipelines: [:browser]  
 > [info] Sent 200 in 760µs  
 >
 
 
-Press ctrl-c a to stop running apptest    
+Press ctrl-c a to stop running app    
 
 
 ### Docker Hub
