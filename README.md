@@ -8,7 +8,7 @@ The image is based on the Elixir Alpine docker image.
 ## Recent Changes
 
 ### 2025-04-19
-Updated parent container to elixir:1.18-alpine.
+New base image elixir:1.18-alpine.
 
 
 ### 2025-03-02
@@ -75,26 +75,28 @@ Where version is either numeric based on the Phoenix version or the literal
 This is the default - builds the latest version of Phoenix Framework.   
 
 
-> regular build  
+__Regular build__  
+
 ```shell
 docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
 ```
 
-> include sbom and provenance  
+__Build with sbom and provenance__  
+
 ```shell
 docker build --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
 ```
 
 
-__Update the Base Image__
+__Update Base Image with Build__
 
 
-> regular build  
 ```shell
 docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
 ```
 
-> include sbom and provenance  
+__With sbom and provenance__
+
 ```shell
 docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
 ```
@@ -111,7 +113,8 @@ version you want to build:
 export PHX_VERSION=1.7.20
 ```
 
-> replace aviumlabs with your docker namespace  
+Replace aviumlabs with your docker namespace  
+
 ```shell
 docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
 --build-arg PHX_VERSION=$PHX_VERSION --provenance=mode=max --sbom=true .
@@ -123,22 +126,17 @@ docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \
 Run the docker image and confirm Alpine version, PostgreSQL client version.
 
 
-> Runs the container in the foreground  
+Run container in the foreground:  
+
 ```shell
 docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
 ```
 
-> Running With Ecto - Will not work outside of docker compose  
-```shell
-docker run --name app -it -e ECTO=y -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
-```
+
+
+Open an additional shell:  
 
 ```shell
-docker run --name myapp -it -e ECTO=y -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
-```
-
-> Open an additional shell 
-``shell
 docker exec -it app /bin/ash
 ```
 
