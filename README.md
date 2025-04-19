@@ -7,6 +7,11 @@ The image is based on the Elixir Alpine docker image.
 
 ## Recent Changes
 
+### 2025-04-19
+Updated parent container to elixir:1.18-alpine.
+
+
+### 2025-03-02
 Added __phoenix__ system account and set /opt/phoenix as the default 
 container directory. 
 
@@ -69,11 +74,14 @@ Where version is either numeric based on the Phoenix version or the literal
 
 This is the default - builds the latest version of Phoenix Framework.   
 
-```shell
-# regular build
-docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
 
-# include sbom and provenance
+> regular build  
+```shell
+docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
+```
+
+> include sbom and provenance  
+```shell
 docker build --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
 ```
 
@@ -81,11 +89,13 @@ docker build --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max
 __Update the Base Image__
 
 
+> regular build  
 ```shell
-# regular build
 docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
+```
 
-# include sbom and provenance
+> include sbom and provenance  
+```shell
 docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
 ```
 
@@ -99,8 +109,10 @@ version you want to build:
 
 ```shell
 export PHX_VERSION=1.7.20
+```
 
-# replace aviumlabs with your docker namespace
+> replace aviumlabs with your docker namespace  
+```shell
 docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
 --build-arg PHX_VERSION=$PHX_VERSION --provenance=mode=max --sbom=true .
 ```
@@ -108,31 +120,43 @@ docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \
 ## Run
 
 
-Run the docker image and confirm Alpine version, PostgreSQL client version:
+Run the docker image and confirm Alpine version, PostgreSQL client version.
+
+
+> Runs the container in the foreground  
+```shell
+docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
+```
+
+> Running With Ecto - Will not work outside of docker compose  
+```shell
+docker run --name app -it -e ECTO=y -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
+```
 
 ```shell
-# Running Without Ecto
-# Runs the container in the foreground
-docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
-
-# Running With Ecto - Will not work outside of docker compose
-docker run --name app -it -e ECTO=y -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
-
 docker run --name myapp -it -e ECTO=y -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
-
-# Open an additional shell 
-cat /etc/alpine-release
-
->
-> 3.21.3
->
-
-psql --version
-
-> 
-> psql (PostgreSQL) 17.4
-> 
 ```
+
+> Open an additional shell 
+``shell
+docker exec -it app /bin/ash
+```
+
+```shell
+cat /etc/alpine-release
+```
+
+>  
+> 3.21.3  
+>  
+
+```shell
+psql --version
+```
+
+>  
+> psql (PostgreSQL) 17.4  
+>   
 
 ## Application Development
 
@@ -148,9 +172,10 @@ To create your initial application development environment run the
 
 General command
 
-
-`gh repo create <application_name> -c -d "Application description" \
---private|--public -p aviumlabs/phoenix`
+```shell
+gh repo create <application_name> -c -d "Application description" \
+--private|--public -p aviumlabs/phoenix
+```
 
 
 __Flags__
@@ -160,8 +185,8 @@ __Flags__
 * --private|--public specifies if this a private or public repository
 * -p make the new repository based on this template repository
 
+> Example  
 ```shell
-# Example 
 gh repo create myapp -c -d "My First Application" --private \
 -p aviumlabs/phoenix
 ```
@@ -188,18 +213,17 @@ directory will be populated with the baseline Phoenix Framwork application.
 
 ```shell
 docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/myapp aviumlabs/phoenix:latest-alpine 
-
-> 
-> Generated myapp app
-> [info] Running MyappWeb.Endpoint with Bandit 1.6.7 at 0.0.0.0:4000 (http)
-> [info] Access MyappWeb.Endpoint at http://localhost:4000
-> [watch] build finished, watching for changes...
-> 
-> Rebuilding...
-> 
-> Done in 740ms.
-> 
 ```
+>  
+> Generated myapp app  
+> [info] Running MyappWeb.Endpoint with Bandit 1.6.7 at 0.0.0.0:4000 (http)  
+> [info] Access MyappWeb.Endpoint at http://localhost:4000  
+> [watch] build finished, watching for changes...  
+>   
+> Rebuilding...  
+>   
+> Done in 740ms.  
+>  
 
 Browsing to http://localhost:4000 will show you the default landing page of a 
 Phoenix Framework application.
