@@ -7,6 +7,11 @@ The image is based on the Elixir Alpine docker image.
 
 ## Recent Changes
 
+### 2025-05-20
+Igniter and Tidewave are now part of the base image.  
+
+See [MCP docs](https://hexdocs.pm/tidewave/mcp.html) for editor support.  
+
 ### 2025-04-19
 New base image elixir:1.18-alpine.
 
@@ -24,9 +29,9 @@ Running the container now depends on a couple of environment variables
 to be passed to the container.
 
 
-* APP_NAME - the name of the Phoenix application to be setup or run.
+* APP_NAME - the name of the Phoenix application to be setup or run.  
 * ECTO - a y/n flag (defaults to n) to include database support in the 
-       Phoenix application
+    Phoenix application  
 
 
 Ecto support in the docker-entrypoint script is designed to work with the docker 
@@ -214,7 +219,7 @@ docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bin
 ```
 >  
 > Generated myapp app  
-> [info] Running MyappWeb.Endpoint with Bandit 1.6.7 at 0.0.0.0:4000 (http)  
+> [info] Running MyappWeb.Endpoint with Bandit 1.6.11 at 0.0.0.0:4000 (http)  
 > [info] Access MyappWeb.Endpoint at http://localhost:4000  
 > [watch] build finished, watching for changes...  
 >   
@@ -256,7 +261,7 @@ Pretty awesome! Much gratitude and appreciation to the Phoenix Framework,
 Elixir, Erlang, Alpine, and PostgreSQL teams for their amazing work!
 
 
-From here it is up to you to build some amazing applications. Good luck!
+Have fun!
  
 
 __References__
@@ -280,7 +285,7 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 The services included are:  
 - PostgreSQL 17.4 
-- Phoenix Framework 1.7.20 or later  
+- Phoenix Framework 1.7.21 or later  
 
 
 ## Project Notes
