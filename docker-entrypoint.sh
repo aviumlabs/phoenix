@@ -97,10 +97,40 @@ phx_install() {
 	fi
 }
 
+
+twai_install() {
+	if [[ ! -d $PHX_HOME/$APP_NAME/deps/tidewave ]]; then
+		# Install igniter and tidewave.ai
+		yes Y | mix archive.install hex igniter_new
+		yes Y | mix igniter.install tidewave
+
+		if [ $? -lt 1 ]; then
+			twai_config
+		fi
+	fi
+}
+
+twai_config() {
+	# Configure tidewave.ai for docker
+	printf "Updating endpoint.ex to allow remote access to tidewave.ai...\n"
+	app_web="${APP_NAME}_web"
+	update_file="$PHX_HOME/$APP_NAME/lib/$app_web/endpoint.ex"
+	# endpoint.ex 
+	#  plug Plug.MethodOverride
+	#  plug Tidewave, :allow_remote_access
+	if [[ -f $update_file ]]; then
+		sed -i '' -e 's|\(plug Tidewave\)|\1, allow_remote_access: true|' $update_file >/dev/null 2>&1
+	fi
+}
+
+
 main() {
 	phx_install
 
 	cd $PHX_HOME/$APP_NAME	
+
+	twai_install	
+
 	exec "$@"
 }
 
