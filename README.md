@@ -112,16 +112,18 @@ docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=m
 
 To build a specific version of Phoenix Framework; pass in the Phoenix 
 version you want to build:   
-
-
 ```shell
 export PHX_VERSION=1.7.20
 ```
 
-Replace aviumlabs with your docker namespace  
-
+To build release candidate 3 of Phoenix 1.8:  
 ```shell
-docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \ 
+export PHX_VERSION=1.8.0-rc.3
+```
+
+Replace `aviumlabs` with your docker namespace:  
+```shell
+docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \
 --build-arg PHX_VERSION=$PHX_VERSION --provenance=mode=max --sbom=true .
 ```
 
@@ -137,6 +139,9 @@ Run container in the foreground:
 docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
 ```
 
+```shell
+docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:$PHX_VERSION-alpine
+```
 
 
 Open an additional shell:  
@@ -333,8 +338,14 @@ Press ctrl-c a to stop running app
 
 Internal notes for pushing images to Docker Hub.  
 
+```shell
+docker push aviumlabs/phoenix:<tagname>-alpine
+```
 
-    docker push aviumlabs/phoenix:<tagname>-alpine  
+```shell
+docker push aviumlabs/phoenix:1.8.0-rc.3-alpine
+```
 
- 
-    docker push aviumlabs/phoenix:latest-alpine  
+```shell 
+docker push aviumlabs/phoenix:latest-alpine
+```
