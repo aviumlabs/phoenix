@@ -41,6 +41,29 @@ get_db_pwd() {
 }
 
 
+phx_install() {
+	# ensure APP_NAME has been set 
+	if [ -n $APP_NAME ]; then
+		# program directory /opt/phoenix
+		if [[ ! -d $PHX_HOME/$APP_NAME/config ]]; then
+			printf "Running mix phx.new...\n"
+			if [[ $ECTO == 'y' ]]; then
+				yes Y | mix phx.new --install $PHX_HOME/$APP_NAME --binary-id
+			else
+				yes Y | mix phx.new --install --no-ecto $PHX_HOME/$APP_NAME --binary-id
+			fi
+			
+			if [ $? -lt 1 ]; then 
+				phx_config
+			fi
+		fi
+	else
+		printf "APP_NAME has not been set, exiting."
+		exit 1
+	fi
+}
+
+
 phx_config() {
 	# program directory /opt/phoenix
 	if [[ -d $PHX_HOME/$APP_NAME/config ]]; then
@@ -75,31 +98,8 @@ phx_config() {
 }
 
 
-phx_install() {
-	# ensure APP_NAME has been set 
-	if [ -n $APP_NAME ]; then
-		# program directory /opt/phoenix
-		if [[ ! -d $PHX_HOME/$APP_NAME/config ]]; then
-			printf "Running mix phx.new...\n"
-			if [[ $ECTO == 'y' ]]; then
-				yes Y | mix phx.new --install $PHX_HOME/$APP_NAME --binary-id
-			else
-				yes Y | mix phx.new --install --no-ecto $PHX_HOME/$APP_NAME --binary-id
-			fi
-			
-			if [ $? -lt 1 ]; then 
-				phx_config
-			fi
-		fi
-	else
-		printf "APP_NAME has not been set, exiting."
-		exit 1
-	fi
-}
-
-
 twai_install() {
-	if [[ ! -d $PHX_HOME/$APP_NAME/deps/tidewave ]]; then
+	if [[ ! -f $PHX_HOME/$APP_NAME/deps/tidewave/lib/tidewave.ex ]]; then
 		# Install igniter and tidewave.ai
 		yes Y | mix archive.install hex igniter_new
 		yes Y | mix igniter.install tidewave
@@ -124,11 +124,18 @@ twai_config() {
 }
 
 
+deps_install() {
+	if [[ ! -d $PHX_HOME/$APP_NAME/deps/table_rex]]; then
+		yes Y | mix archive.install hex table_rex
+	fi
+}
+
+
 main() {
 	phx_install
 
-	cd $PHX_HOME/$APP_NAME	
-
+	cd $PHX_HOME/$APP_NAME
+	deps_install
 	twai_install	
 
 	exec "$@"
