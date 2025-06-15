@@ -125,7 +125,7 @@ twai_config() {
 
 
 deps_install() {
-	if [[ ! -d $PHX_HOME/$APP_NAME/deps/table_rex]]; then
+	if [[ ! -d $PHX_HOME/$APP_NAME/deps/table_rex ]]; then
 		yes Y | mix archive.install hex table_rex
 	fi
 }
