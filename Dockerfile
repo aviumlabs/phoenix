@@ -19,7 +19,7 @@ RUN apk add --no-cache \
     musl-dev \
     postgresql17-client \ 
     inotify-tools \
-    git
+    git 
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh

@@ -41,6 +41,20 @@ get_db_pwd() {
 }
 
 
+git_cleanup() {
+	# remove the git repository if it exists
+	if [[ -d $PHX_HOME/$APP_NAME/.git ]]; then
+		printf "Removing git repository...\n"
+		rm -rf $PHX_HOME/$APP_NAME/.git
+	fi
+
+	if [[ -f $PHX_HOME/$APP_NAME/.gitignore ]]; then
+		printf "Removing gitignore file...\n"
+		rm -f $PHX_HOME/$APP_NAME/.gitignore
+	fi
+}
+
+
 phx_install() {
 	# ensure APP_NAME has been set 
 	if [ -n $APP_NAME ]; then
@@ -100,6 +114,7 @@ phx_config() {
 
 twai_install() {
 	if [[ ! -f $PHX_HOME/$APP_NAME/deps/tidewave/lib/tidewave.ex ]]; then
+		cd $PHX_HOME/$APP_NAME
 		# Install igniter and tidewave.ai
 		yes Y | mix archive.install hex igniter_new
 		yes Y | mix igniter.install tidewave
@@ -109,6 +124,7 @@ twai_install() {
 		fi
 	fi
 }
+
 
 twai_config() {
 	# Configure tidewave.ai for docker
@@ -125,10 +141,9 @@ twai_config() {
 
 
 main() {
-	phx_install
-
-	cd $PHX_HOME/$APP_NAME
-	twai_install	
+	phx_install 
+	twai_install
+	git_cleanup
 
 	exec "$@"
 }

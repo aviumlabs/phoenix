@@ -116,14 +116,14 @@ version you want to build:
 export PHX_VERSION=1.7.20
 ```
 
-To build release candidate 3 of Phoenix 1.8:  
+To build release candidate 4 of Phoenix 1.8:  
 ```shell
-export PHX_VERSION=1.8.0-rc.3
+export PHX_VERSION=1.8.0-rc.4
 ```
 
 Replace `aviumlabs` with your docker namespace:  
 ```shell
-docker build --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \
+docker build --pull --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \
 --build-arg PHX_VERSION=$PHX_VERSION --provenance=mode=max --sbom=true .
 ```
 
@@ -155,7 +155,7 @@ cat /etc/alpine-release
 ```
 
 >  
-> 3.21.3  
+> 3.22.1  
 >  
 
 ```shell
@@ -163,7 +163,7 @@ psql --version
 ```
 
 >  
-> psql (PostgreSQL) 17.4  
+> psql (PostgreSQL) 17.5  
 >   
 
 ## Application Development
@@ -224,7 +224,7 @@ docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bin
 ```
 >  
 > Generated myapp app  
-> [info] Running MyappWeb.Endpoint with Bandit 1.6.11 at 0.0.0.0:4000 (http)  
+> [info] Running MyappWeb.Endpoint with Bandit 1.7.0 at 0.0.0.0:4000 (http)  
 > [info] Access MyappWeb.Endpoint at http://localhost:4000  
 > [watch] build finished, watching for changes...  
 >   
@@ -289,7 +289,7 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 
 The services included are:  
-- PostgreSQL 17.4 
+- PostgreSQL 17.5 
 - Phoenix Framework 1.7.21 or later  
 
 
@@ -343,7 +343,7 @@ docker push aviumlabs/phoenix:<tagname>-alpine
 ```
 
 ```shell
-docker push aviumlabs/phoenix:1.8.0-rc.3-alpine
+docker push aviumlabs/phoenix:$PHX_VERSION-alpine
 ```
 
 ```shell 
