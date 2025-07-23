@@ -28,6 +28,8 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 
 USER phoenix
 
+RUN git config --global init.defaultBranch main
+
 RUN mix local.hex --force \
     && mix archive.install hex phx_new $PHX_VERSION --force \
     && mix local.rebar --force
