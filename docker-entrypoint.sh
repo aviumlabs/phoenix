@@ -143,7 +143,6 @@ twai_config() {
 main() {
 	phx_install 
 	twai_install
-	git_cleanup
 
 	exec "$@"
 }

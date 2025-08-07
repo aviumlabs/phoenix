@@ -7,10 +7,14 @@ The image is based on the Elixir Alpine docker image.
 
 ## Recent Changes
 
+### 2025-08-06
+Updated to Phoenix Framework 1.8.0
+
 ### 2025-05-20
 Igniter and Tidewave are now part of the base image.  
 
 See [MCP docs](https://hexdocs.pm/tidewave/mcp.html) for editor support.  
+
 
 ### 2025-04-19
 New base image elixir:1.18-alpine.
@@ -20,39 +24,30 @@ New base image elixir:1.18-alpine.
 Added __phoenix__ system account and set /opt/phoenix as the default 
 container directory. 
 
-
 The prepare script has been internalized and the functionality moved 
 to the docker-entrypoint.sh file. 
 
-
 Running the container now depends on a couple of environment variables 
 to be passed to the container.
-
 
 * APP_NAME - the name of the Phoenix application to be setup or run.  
 * ECTO - a y/n flag (defaults to n) to include database support in the 
     Phoenix application  
 
-
 Ecto support in the docker-entrypoint script is designed to work with the docker 
 phoenix-compose project (see Companion Project below).
-
 
 Mix and hex are now installed under the /opt/phoenix directory.
 
 
 ## Image Naming Convention
-
-
 The image naming convention is divided between **Standard** and **Extended**.
 It is based on similar projects running Alpine Linux, where `-alpine` is 
 appended to the end of the tag.  
 
-
 The **Standard** naming convention will attempt to be based on the latest 
 version of Alpine, Erlang, Elixir, and the Phoenix Framework except in the 
 case of where a conflict arises.  
-
 
 The **Extended** naming convention may either be based on the previous stable 
 version of Elixir or the cutting edge version of Elixir.   
@@ -61,7 +56,6 @@ version of Elixir or the cutting edge version of Elixir.
 ### Standard Naming Convention
 
     aviumlabs/phoenix:<version | latest>-alpine
-
 
 Where version is either numeric based on the Phoenix version or the literal 
 'latest'.  
@@ -74,51 +68,41 @@ Where version is either numeric based on the Phoenix version or the literal
 
 ## Building an Image
 
-
 ### Latest Phoenix Version 
 
 This is the default - builds the latest version of Phoenix Framework.   
 
-
-__Regular build__  
-
+**Regular build**  
 ```shell
 docker build --no-cache -t aviumlabs/phoenix:latest-alpine .
 ```
 
-__Build with sbom and provenance__  
-
+**Build with sbom and provenance** 
 ```shell
 docker build --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
 ```
 
-
-__Update Base Image with Build__
-
-
+**Update Base Image with Build**
 ```shell
 docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine .
 ```
 
-__With sbom and provenance__
-
+**With sbom and provenance**
 ```shell
 docker build --pull --no-cache -t aviumlabs/phoenix:latest-alpine --provenance=mode=max --sbom=true .
 ```
 
- 
+
 ### Specific Phoenix Version
-
-
 To build a specific version of Phoenix Framework; pass in the Phoenix 
 version you want to build:   
 ```shell
-export PHX_VERSION=1.7.20
+export PHX_VERSION=1.7.21
 ```
 
 To build release candidate 4 of Phoenix 1.8:  
 ```shell
-export PHX_VERSION=1.8.0-rc.4
+export PHX_VERSION=1.8.0-rc0
 ```
 
 Replace `aviumlabs` with your docker namespace:  
@@ -128,13 +112,9 @@ docker build --pull --no-cache -t aviumlabs/phoenix:$PHX_VERSION-alpine \
 ```
 
 ## Run
-
-
 Run the docker image and confirm Alpine version, PostgreSQL client version.
 
-
 Run container in the foreground:  
-
 ```shell
 docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
 ```
@@ -142,7 +122,6 @@ docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,sr
 ```shell
 docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:$PHX_VERSION-alpine
 ```
-
 
 Open an additional shell:  
 
@@ -167,17 +146,14 @@ psql --version
 >   
 
 ## Application Development
-
 This docker image is designed to work with the host filesystem and the GitHub 
 repository is a template repository.
-
 
 To create your initial application development environment run the 
 `gh repo create` command.
 
 
 ### Create and Clone a New Repository with GitHub CLI
-
 General command
 
 ```shell
@@ -185,8 +161,7 @@ gh repo create <application_name> -c -d "Application description" \
 --private|--public -p aviumlabs/phoenix
 ```
 
-
-__Flags__
+**Flags**
 
 * -c specifies to clone the repository to the current working directory
 * -d description of the new repository to be created
@@ -236,10 +211,8 @@ docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bin
 Browsing to http://localhost:4000 will show you the default landing page of a 
 Phoenix Framework application.
 
-
 And listing the contents of src directory will show you the standard Phoenix 
 Framework application layout.
-
 
 * README.md
 * assets
@@ -265,46 +238,35 @@ the change.
 Pretty awesome! Much gratitude and appreciation to the Phoenix Framework, 
 Elixir, Erlang, Alpine, and PostgreSQL teams for their amazing work!
 
-
 Have fun!
  
-
-__References__
+**References**
 * https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 
 ---
 
 
 ## Companion Project
-
-
 There is a companion project to this project for building a Phoenix Framework 
 project integrated with PostgreSQL.  
-
 
     https://github.com/aviumlabs/phoenix-compose.git
 
 
 The aviumlabs/phoenix-compose repo is also a template repository.   
 
-
 The services included are:  
 - PostgreSQL 17.5 
-- Phoenix Framework 1.7.21 or later  
+- Phoenix Framework 1.8.0 or later  
 
 
 ## Project Notes
 
-
 ### Project Testing
-
-
 In a separate terminal session, confirm the application is running:  
-
 
     curl -X 'GET' http://localhost:4000
 
-  
 >
 > <!-- \<AppWeb.Layouts.root> lib/app_web/components/layouts/root.html.heex:1 -->  
 > <!DOCTYPE html>  
@@ -318,7 +280,6 @@ In a separate terminal session, confirm the application is running:
 > </html>\<!-- \</AppWeb.Layouts.root> -->
 >  
 
-
 Output from app runtime terminal:  
 
 >
@@ -329,15 +290,10 @@ Output from app runtime terminal:
 > [info] Sent 200 in 760µs  
 >
 
-
 Press ctrl-c a to stop running app    
 
-
 ### Docker Hub
-
-
 Internal notes for pushing images to Docker Hub.  
-
 ```shell
 docker push aviumlabs/phoenix:<tagname>-alpine
 ```
