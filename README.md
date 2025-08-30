@@ -7,17 +7,21 @@ The image is based on the Elixir Alpine docker image.
 
 ## Recent Changes
 
+### 2025-08-30
+* Update latest image to Phoenix Framework 1.8.1.  
+* Fix run commands.  
+
 ### 2025-08-06
-Updated to Phoenix Framework 1.8.0
+* Updated to Phoenix Framework 1.8.0.  
 
 ### 2025-05-20
-Igniter and Tidewave are now part of the base image.  
+* Igniter and Tidewave are now part of the base image.   
 
 See [MCP docs](https://hexdocs.pm/tidewave/mcp.html) for editor support.  
 
 
 ### 2025-04-19
-New base image elixir:1.18-alpine.
+* New base image elixir:1.18-alpine.
 
 
 ### 2025-03-02
@@ -116,11 +120,13 @@ Run the docker image and confirm Alpine version, PostgreSQL client version.
 
 Run container in the foreground:  
 ```shell
-docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:latest-alpine
+export APP_NAME=app
+
+docker run --name app -it -e APP_NAME=$APP_NAME --rm -p 4000:4000 -w "/opt/phoenix/$APP_NAME" --mount type=bind,src="$(pwd)/src",target="/opt/phoenix/$APP_NAME" aviumlabs/phoenix:latest-alpine
 ```
 
 ```shell
-docker run --name app -it -e APP_NAME=app --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/app aviumlabs/phoenix:$PHX_VERSION-alpine
+docker run --name app -it -e APP_NAME=$APP_NAME --rm -p 4000:4000 -w "/opt/phoenix/$APP_NAME" --mount type=bind,src="$(pwd)/src",target="/opt/phoenix/$APP_NAME" aviumlabs/phoenix:$PHX_VERSION-alpine
 ```
 
 Open an additional shell:  
@@ -195,17 +201,18 @@ During the first-time run, the application will be configured, and the src
 directory will be populated with the baseline Phoenix Framwork application.
 
 ```shell
-docker run --name myapp -it -e APP_NAME=myapp --rm -p 4000:4000 --mount type=bind,src="$(pwd)/src",target=/opt/phoenix/myapp aviumlabs/phoenix:latest-alpine 
+export APP_NAME=app
+
+docker run --name myapp -it -e APP_NAME=$APP_NAME --rm -p 4000:4000 -w "/opt/phoenix/$APP_NAME" --mount type=bind,src="$(pwd)/src",target="/opt/phoenix/$APP_NAME" aviumlabs/phoenix:latest-alpine 
 ```
 >  
 > Generated myapp app  
-> [info] Running MyappWeb.Endpoint with Bandit 1.7.0 at 0.0.0.0:4000 (http)  
+> [info] Running MyappWeb.Endpoint with Bandit 1.8.0 at 0.0.0.0:4000 (http)  
 > [info] Access MyappWeb.Endpoint at http://localhost:4000  
 > [watch] build finished, watching for changes...  
+> ...    
 >   
-> Rebuilding...  
->   
-> Done in 740ms.  
+> Done in 382ms.  
 >  
 
 Browsing to http://localhost:4000 will show you the default landing page of a 
@@ -257,7 +264,7 @@ The aviumlabs/phoenix-compose repo is also a template repository.
 
 The services included are:  
 - PostgreSQL 17.5 
-- Phoenix Framework 1.8.0 or later  
+- Phoenix Framework 1.8.1 or later  
 
 
 ## Project Notes
@@ -305,3 +312,35 @@ docker push aviumlabs/phoenix:$PHX_VERSION-alpine
 ```shell 
 docker push aviumlabs/phoenix:latest-alpine
 ```
+
+## Project Tags
+
+### Release Tag v1.2.0
+
+This release is pinned to the Elixir docker image - elixir:1.18-alpine.
+
+08-30-2025 Stack
+* Alpine Linux 3.22
+* Erlang 28.0.2
+* Elixir 1.18.3
+* Phoenix Framework 1.8.1
+
+These versions are subject to change at build time.
+
+
+### Release Tag v1.1.0
+
+Includes Igniter and Tidewav.ai
+
+
+### Release Tag v1.0.0
+
+This release is pinned to the Elixir docker image - elixir:1.17-alpine.
+
+02-02-2025 Stack
+* Alpine Linux 3.21
+* Erlang 27.2.4
+* Elixir 1.17.3
+* Phoenix Framework 1.7.20
+
+These versions are subject to change at build time.
