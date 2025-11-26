@@ -7,6 +7,9 @@ The image is based on the Elixir Alpine docker image.
 
 ## Recent Changes
 
+### 2025-11-25
+* Update to Elixir 1.19.3
+
 ### 2025-08-30
 * Update latest image to Phoenix Framework 1.8.1.  
 * Fix run commands.  
@@ -140,7 +143,7 @@ cat /etc/alpine-release
 ```
 
 >  
-> 3.22.1  
+> 3.22.2  
 >  
 
 ```shell
@@ -148,8 +151,19 @@ psql --version
 ```
 
 >  
-> psql (PostgreSQL) 17.5  
+> psql (PostgreSQL) 17.7  
 >   
+
+```shell
+elixir --version
+```
+
+>  
+> Erlang/OTP 28 ...
+>  
+> Elixir 1.19.3 ...
+>  
+
 
 ## Application Development
 This docker image is designed to work with the host filesystem and the GitHub 
