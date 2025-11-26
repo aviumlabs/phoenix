@@ -8,7 +8,7 @@ The image is based on the Elixir Alpine docker image.
 ## Recent Changes
 
 ### 2025-11-25
-* Update to Elixir 1.19.3
+* Update to Elixir 1.19.3 and Phoenix Framework 1.8.2
 
 ### 2025-08-30
 * Update latest image to Phoenix Framework 1.8.1.  
